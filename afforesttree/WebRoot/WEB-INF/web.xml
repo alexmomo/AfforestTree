@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<web-app   
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xmlns="http://java.sun.com/xml/ns/javaee"   
+    xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"  
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"  
+    id="WebApp_ID"   
+    version="3.0">
+    
+    <display-name>afforesttree</display-name>
+    
+	<context-param>  
+   	 	<param-name>webAppRootKey</param-name>  
+    	<param-value>dev.root</param-value>  
+	</context-param> 
+	  
+	<!-- Spring 服务层的配置文件,定义WebAppliactionContext上下文中的bean -->
+	<context-param>  
+    	<param-name>contextConfigLocation</param-name>  
+    	<param-value>
+    		classpath:/conf/application-context.xml
+    		classpath:/conf/cxf/cxf.xml
+    		classpath:/conf/application-cxf.xml
+    		classpath:/conf/hibernate-context.xml
+    		classpath:/conf/transaction-context.xml
+    	</param-value>  
+  	</context-param>  
+  	
+  	<listener>
+     <listener-class>com.afforesttree.org.springframework.web.servlet.listener.InitData</listener-class>
+     </listener>  
+  	
+  	<listener>  
+    	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>  
+  	</listener> 
+  	<!-- 监听Web应用的生命周期 -->
+	<listener>
+		<listener-class>com.afforesttree.org.springframework.web.servlet.listener.ServletContextLifeListener</listener-class>
+	</listener> 
+	
+     <filter>
+    	<filter-name>loggerFilter</filter-name>
+    	<filter-class><!-- DEBUG级别起作用,获取请求路径, -->
+    		org.springframework.web.filter.ServletContextRequestLoggingFilter
+    	</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>loggerFilter</filter-name>
+        <url-pattern>*.shtml</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>loggerFilter</filter-name>
+        <url-pattern>*.do</url-pattern>
+    </filter-mapping>
+	
+	
+  	<servlet>  
+    	<servlet-name>springmvc</servlet-name>  
+    	<!-- 这个类中完成Spring context的加载与创建,每一个DispatcherServlet有自己的WebApplicationContext上下文对象 -->
+    	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>  
+    	<!-- 如果不定义init-param属性,Spring MVC的 Servlet,根据name加载WEB-INF/springmvc-servlet.xml的配置文件 -->
+    	<init-param>  
+        	<param-name>contextConfigLocation</param-name>  
+        	<param-value>classpath:/conf/springmvc-servlet.xml</param-value>  
+    	</init-param>  
+    	<load-on-startup>1</load-on-startup>  
+  	</servlet>  
+  	<servlet-mapping>  
+    	<servlet-name>springmvc</servlet-name>  
+    	<url-pattern>*.shtml</url-pattern>
+  	</servlet-mapping> 
+  	<servlet-mapping>  
+    	<servlet-name>springmvc</servlet-name>  
+    	<url-pattern>*.do</url-pattern>
+  	</servlet-mapping> 
+  	<servlet>  
+	    <servlet-name>CXFServlet</servlet-name>  
+	    <servlet-class>  
+	        org.apache.cxf.transport.servlet.CXFServlet  
+	    </servlet-class>  
+	    
+	    <load-on-startup>1</load-on-startup>  
+	</servlet>  
+  
+	<servlet-mapping>  
+	    <servlet-name>CXFServlet</servlet-name>  
+	    <url-pattern>/services/*</url-pattern>  
+	</servlet-mapping> 
+  	
+  	<!-- 处理静态文件方案一:激活Tomcat的defaultServlet来处理静态文件 -->
+    <servlet-mapping>   
+    	<servlet-name>default</servlet-name>  
+    	<url-pattern>*.jpg</url-pattern>     
+	</servlet-mapping>    
+	<servlet-mapping>       
+    	<servlet-name>default</servlet-name>    
+   	 	<url-pattern>*.js</url-pattern>    
+	</servlet-mapping>    
+	<servlet-mapping>        
+    	<servlet-name>default</servlet-name>       
+    	<url-pattern>*.css</url-pattern>      
+	</servlet-mapping>
+	
+  	<welcome-file-list>
+    	<welcome-file>switch.html</welcome-file>
+  	</welcome-file-list>
+  	
+  	
+  	<servlet>
+	  <servlet-name>dwr-invoker</servlet-name>
+	  <servlet-class>uk.ltd.getahead.dwr.DWRServlet</servlet-class>
+	  <init-param>
+	    <param-name>debug</param-name>
+	    <param-value>true</param-value>
+	  </init-param>
+	</servlet> 
+	<servlet-mapping>
+	  <servlet-name>dwr-invoker</servlet-name>
+	  <url-pattern>/dwr/*</url-pattern>
+	</servlet-mapping>
+ 	
+</web-app>
