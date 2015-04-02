@@ -14,15 +14,7 @@ public class AppInitConstants {
 	 * System configuration JVars Map - Start loading
 	 */
 	public static String language = DBConfig.getLanguage(); 
-	public static String local_db_plus = "db_plus/" + DBConfig.getLanguage() + "/";
-	
 	public static HashMap<String,String> CONFIG_MAP = new HashMap<String,String>();
-	public static HashMap<String, String> CODE_ENGotoBus_MAP = new HashMap<String, String>();
-	public static HashMap<String, String> CODE_ENTakeTours_MAP = new HashMap<String, String>();
-	public static HashMap<String, String> CODE_CN_MAP = new HashMap<String, String>();
-	public static HashMap<String, String> CODE_BIG5_MAP = new HashMap<String, String>();
-	public static HashMap<String, String> CODE_ZIJIQU_MAP = new HashMap<String, String>();
-	private static LinkedHashMap<String, Integer> websiteFilter = websiteFilter();
 	private static Integer page_width = 960;
 	private static Integer content_space = 6;
 	private static Integer cookieMaxAge = 60 * 60 * 24 * 7;
@@ -78,41 +70,8 @@ public class AppInitConstants {
 	private static final List<Integer> defaultBoards = Arrays
 			.asList(new Integer[] { 1, 4, 1000360 });
 
-	public static Integer getWebsitFilter() {
-		return websiteFilter.get(website_filter_key());
-	}
-
-	public static LinkedHashMap<String, Integer> websiteFilter() {
-		LinkedHashMap<String, Integer> map = new LinkedHashMap<String, Integer>();
-		map.put("gotobus", 1);
-		map.put("taketours", 2);
-		map.put("cntaketours", 3);
-		map.put("zijiqu", 4);
-		map.put("big5", 5);
-		return map;
-	}
-
 	public static String getPropertiesValue(String key) {
 		return CONFIG_MAP.get(key);
-	}
-
-	public static String getI18nValue(String key) {//internationalization by key
-		if (website_filter_key().equals("gotobus")) {
-			return CODE_ENGotoBus_MAP.get(key);
-		} 
-		else if (website_filter_key().equals("taketours")) {
-			return CODE_ENTakeTours_MAP.get(key);
-		}else if ("cn".equals(language)) {
-			if(is_traditional()){
-				return CODE_BIG5_MAP.get(key);
-			} else if(website_filter_key().equals("zijiqu")){
-				return CODE_ZIJIQU_MAP.get(key);
-			} else{
-				return CODE_CN_MAP.get(key);
-			}
-		}  else {
-			return key;
-		}
 	}
 
 	public static String ico(){
@@ -144,41 +103,6 @@ public class AppInitConstants {
 		return getPropertiesValue("m_main_domain");
 	}
 	
-	public static String select_xsl(String flag) {
-		if (flag.equals("list")) {
-			return local_db_plus + getPropertiesValue("xsllisttour");
-		} else {
-			return local_db_plus + getPropertiesValue("xsltour");
-		}
-	}
-
-	public static String get_select_xsl(String flag) {
-		if (flag.equals("list")) {
-			return local_db_plus + getPropertiesValue("dbxsllisttour");
-		} else {
-			return local_db_plus + getPropertiesValue("dbxsltour");
-		}
-	}
-
-	public static String getXslbusembed() {
-		return local_db_plus + getPropertiesValue("xslbusembed");
-	}
-
-	public static String getXslBusMobile() {
-		return local_db_plus + getPropertiesValue("xslBusMobile");
-	}
-
-	public static String getXslbus() {
-		return local_db_plus + getPropertiesValue("xslbus");
-	}
-	
-	public static String getNewXslbus() {
-		return local_db_plus + getPropertiesValue("newxslbus");
-	}
-	
-	public static String getXslBusForApi() {
-		return local_db_plus + getPropertiesValue("xslbusforapi");
-	}
 
 	public static String getStyleFileName() {
 		return getPropertiesValue("localStyleFileName");
@@ -220,27 +144,6 @@ public class AppInitConstants {
 		return defaultBoards;
 	}
 
-	public static String getDesWs() {
-		return local_db_plus + getPropertiesValue("desWs");
-	}
-
-	public static String getHotelXsl(String xsl_flag) {
-		return local_db_plus + "hotel/" + xsl_flag + ".xsl";
-	}
-	
-	public static String getMobileHotelXsl()
-	{
-		return local_db_plus + "hotel/detail_gotobus_for_mobile.xsl";
-	}
-
-	public static String getBusHotelXsl() {
-		return local_db_plus + getPropertiesValue("busHotelXsl");
-	}
-	
-	public static String getMobileBusHotelXsl()
-	{
-		return local_db_plus + "hotel/bus_and_hotel_for_mobile.xsl";
-	}
 
 	public static int getDisable_tour_of_the_day() {
 		return disable_tour_of_the_day;
@@ -271,44 +174,6 @@ public class AppInitConstants {
 		return getPropertiesValue("jsVersion");
 	}
 
-	public static LinkedHashMap<String, String> day_to_value() {
-		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-		map.put("1-1", "1 " + getI18nValue("day"));
-		map.put("2-2", "2 " + getI18nValue("days"));
-		map.put("3-3", "3 " + getI18nValue("days"));
-		map.put("4-4", "4 " + getI18nValue("days"));
-		map.put("5-5", "5 " + getI18nValue("days"));
-		map.put("6-6", "6 " + getI18nValue("days"));
-		map.put("7-7", "7 " + getI18nValue("days"));
-		map.put("8-8", "8 " + getI18nValue("days"));
-		map.put("9-9", "9 " + getI18nValue("days"));
-		map.put("10-", "10 " + getI18nValue("orMoreDays"));
-		map.put("2-3", "2-3 " + getI18nValue("days"));
-		map.put("3-4", "3-4 " + getI18nValue("days"));
-		map.put("4-5", "4-5 " + getI18nValue("days"));
-		map.put("5-6", "5-6 " + getI18nValue("days"));
-		map.put("6-7", "6-7 " + getI18nValue("days"));
-		map.put("7-8", "7-8 " + getI18nValue("days"));
-		map.put("8-9", "8-9 " + getI18nValue("days"));
-		return map;
-	}
-
-	public static String getLocalLaborDayMessage() {
-		try {
-			if (DateProcessor.compareToCurrentTime(getPropertiesValue("localLaborDay")) < 0 || !isHotelDiscount()) {
-				return "";
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			return "";
-		}
-		return getI18nValue("localLaborDayMessage");
-	}
-
-	public static String getXslBusWSXsl() {
-		return "WEB-INF/db_plus/en/bus/bus_search_ws.xsl";
-	}
-	
 	public static String  getSearchTour(){
 		return getPropertiesValue("tour_search_do");
 	}
