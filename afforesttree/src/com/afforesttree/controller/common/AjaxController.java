@@ -34,6 +34,7 @@ public class AjaxController extends BaseController{
 			 * method start
 			 */
 			String method = getParameter(request, "method");
+			//检测用户ID是否已存在
 			if(method.equals("validateAccountIdExist")){
 				String accountId = getParameter(request, "accountId");
 				json.add(accountService.isExistAccount(JUtility.strToMD5(accountId)));
