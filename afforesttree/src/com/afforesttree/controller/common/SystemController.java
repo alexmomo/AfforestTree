@@ -13,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.afforesttree.controller.BaseController;
 import com.afforesttree.mav.BaseModelAndView;
 import com.afforesttree.service.common.AfAccountService;
-import com.afforesttree.util.UrlUtils;
 
 
 @Controller
@@ -41,6 +40,14 @@ public class SystemController extends BaseController {
 	public ModelAndView reSubmitPageRequest(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		BaseModelAndView mv = null;
 		mv = baseModelAndView("re_submit");
+		mv.setMetaTitle("ÂÌ»¯Ê÷");
+		return mv;
+	}
+	
+	@RequestMapping("error.shtml")
+	public ModelAndView errorPageRequest(HttpServletRequest request,HttpServletResponse response) throws Exception {
+		BaseModelAndView mv = null;
+		mv = baseModelAndView("error");
 		mv.setMetaTitle("ÂÌ»¯Ê÷");
 		return mv;
 	}

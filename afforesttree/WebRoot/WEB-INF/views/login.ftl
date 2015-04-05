@@ -20,7 +20,7 @@
     </ul>
   </div>
  	<div class="sixcol last">
-		<form method="post" action="${controlDomain}/login.do" id="my-form" name="my-form">
+		<form method="post" action="${basePath}/login.do" id="my-form" name="my-form">
 		<input type="hidden" id="token" name="token" value="${token}">
 			<div>
 				<h2>µÇÂ¼:</h2>

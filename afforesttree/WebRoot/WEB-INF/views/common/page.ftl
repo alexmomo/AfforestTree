@@ -1,4 +1,3 @@
-
 <#macro html>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!--[if IE 8 ]> <html lang="en" class="ie8"> <![endif]-->
@@ -14,14 +13,14 @@
 		<meta name="keywords" content="${keywords}"/>
 		<meta name="description" content="${description}"/>
 		<link rel="shortcut icon" href="${ico}" type="image/x-icon"/>	
-		<link href="${controlDomain}/css/1140.css" rel="stylesheet"/>
-		<link href="${controlDomain}/css/normalize.css" rel="stylesheet"/>
-		<link href="${controlDomain}/css/jquery-ui.css" rel="stylesheet"/>
-		<link href="${controlDomain}/css/jquery.idealforms.min.css" rel="stylesheet" media="screen"/>
-		<link href="${controlDomain}/css/styles.css" rel="stylesheet" media="all"/>
-		<script src="${controlDomain}/js/jquery-1.8.2.min.js"></script>
-		<script src="${controlDomain}/js/jquery-ui.min.js"></script>
-		<script src="${controlDomain}/js/jquery.idealforms.js"></script>
+		<link href="${basePath}/css/1140.css" rel="stylesheet"/>
+		<link href="${basePath}/css/normalize.css" rel="stylesheet"/>
+		<link href="${basePath}/css/jquery-ui.css" rel="stylesheet"/>
+		<link href="${basePath}/css/jquery.idealforms.min.css" rel="stylesheet" media="screen"/>
+		<link href="${basePath}/css/styles.css" rel="stylesheet" media="all"/>
+		<script src="${basePath}/js/jquery-1.8.2.min.js"></script>
+		<script src="${basePath}/js/jquery-ui.min.js"></script>
+		<script src="${basePath}/js/jquery.idealforms.js"></script>
 		<script language="javascript" type="text/javascript">
 		function showAllContent(status1,status2)
 		{

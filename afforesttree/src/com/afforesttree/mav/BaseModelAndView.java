@@ -17,11 +17,9 @@ import com.afforesttree.config.AppInitConstants;
 
 
 public class BaseModelAndView extends ModelAndView {
-	
-	
-	String metaTitle;
-	String metaKeywords;
-	String metaDescription;
+	private String metaTitle;
+	private String metaKeywords;
+	private String metaDescription;
 	@SuppressWarnings("unchecked")
 	List jsList;
 	@SuppressWarnings("unchecked")
@@ -61,11 +59,10 @@ public class BaseModelAndView extends ModelAndView {
 	}
 	public void setMetaTitle(String metaTitle) {
 		this.metaTitle = metaTitle;
-		this.addObject("title", metaTitle);
+		this.addObject("title", AppInitConstants.getI18nValue(metaTitle));
 	}
 	public String getMetaKeywords() {
-		if(metaKeywords == null)
-		{
+		if(metaKeywords == null){
 			this.setMetaKeywords(AppInitConstants.getI18nValue("metaKeywords"));
 		}
 		return metaKeywords;
@@ -75,9 +72,8 @@ public class BaseModelAndView extends ModelAndView {
 		this.addObject("keywords", metaKeywords);
 	}
 	public String getMetaDescription() {
-		if(metaDescription == null)
-		{
-			this.setMetaDescription(AppInitConstants.getI18nValue("website_name"));
+		if(metaDescription == null){
+			this.setMetaDescription(AppInitConstants.getI18nValue("metaDescription"));
 		}
 		return metaDescription;
 	}
