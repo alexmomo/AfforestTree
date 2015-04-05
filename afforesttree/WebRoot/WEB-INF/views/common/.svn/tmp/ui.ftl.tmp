@@ -1,7 +1,0 @@
-<#include "common/ui/drop_down.ftl"/>
-<#include "common/ui/list.ftl"/>
-<#include "common/ui/bus_station_list.ftl"/>
-<#include "common/ui/common_button.ftl"/>
-<#include "common/ui/common_radio.ftl"/>
-<#include "common/ui/radio_button.ftl"/>
-<#include "common/ui/common_checkbox.ftl"/>
