@@ -19,7 +19,6 @@ import com.afforesttree.config.AppInitConstants;
 public class BaseModelAndView extends ModelAndView {
 	
 	
-	Integer pageWidth = 960;	
 	String metaTitle;
 	String metaKeywords;
 	String metaDescription;
@@ -27,20 +26,11 @@ public class BaseModelAndView extends ModelAndView {
 	List jsList;
 	@SuppressWarnings("unchecked")
 	List cssList;
-	boolean checkMobileRedirect = false;
-	public boolean isCheckMobileRedirect() {
-		return checkMobileRedirect;
-	}
-	public void setCheckMobileRedirect(boolean checkMobileRedirect) {
-		this.checkMobileRedirect = checkMobileRedirect;
-		this.addObject("checkMobileRedirect", checkMobileRedirect);
-	}
 	@SuppressWarnings("unchecked")
 	public List getCssList() {
 		if(this.cssList == null)
 		{
 			cssList = new ArrayList<String>();
-//			cssList.add(AppInitConstants.getStyleFileName());
 			this.setCssList(cssList);
 		}
 		return cssList;
@@ -52,12 +42,8 @@ public class BaseModelAndView extends ModelAndView {
 	}
 	@SuppressWarnings("unchecked")
 	public List getJsList() {
-		if(this.jsList == null)
-		{
+		if(this.jsList == null){
 			jsList = new ArrayList<String>();
-			jsList.add(AppInitConstants.getPropertiesValue("jqueryCoreandUIJS"));
-			jsList.add(AppInitConstants.getPropertiesValue("initJS"));
-			jsList.add(AppInitConstants.getPropertiesValue("jqueryTools"));
 			this.setJsList(jsList);
 		}		
 		return jsList;
@@ -68,8 +54,7 @@ public class BaseModelAndView extends ModelAndView {
 		this.addObject("jsList", jsList);
 	}
 	public String getMetaTitle() {
-		if(metaTitle == null)
-		{
+		if(metaTitle == null){
 			this.setMetaTitle(AppInitConstants.getI18nValue("website_name"));
 		}
 		return metaTitle;
@@ -101,14 +86,6 @@ public class BaseModelAndView extends ModelAndView {
 		this.addObject("description", metaDescription);
 	}
 	
-	public Integer getPageWidth() {
-		return pageWidth;
-	}
-	public void setPageWidth(Integer pageWidth) {
-		this.pageWidth = pageWidth;
-		this.addObject("pageWidth", pageWidth);
-	}
-
 	public BaseModelAndView(String name){
 		super(name); 
 		baseData();
@@ -120,36 +97,25 @@ public class BaseModelAndView extends ModelAndView {
 			Object ok = me.getKey(); 
 		    Object ov = me.getValue(); 
 		    requestMap.put(ok.toString(), ov.toString());
-		   
 	    }
 		this.addObject("reqestParametersMap", requestMap);
 	}
 	
-	public void baseData()
-	{
+	public void baseData(){
 		this.addObject("ico", AppInitConstants.ico());
 		this.addObject("cssList", this.getCssList());
 		this.addObject("version", AppInitConstants.getJsVersion());	
 		this.addObject("charset", AppInitConstants.getEncoding());
-		this.addObject("domain", AppInitConstants.domain());
-		this.addObject("secureDomain", AppInitConstants.secureDomain());
-		this.addObject("controlDomain", AppInitConstants.secureDomain() + this.request().getContextPath());
-		this.addObject("proxyDomain", AppInitConstants.proxyDomain());
 		this.addObject("language", AppInitConstants.getLanguage());
 		this.addObject("websiteFilterKey", AppInitConstants.website_filter_key());
 		this.addObject("jsList", this.getJsList());
-		this.addObject("pageWidth", this.getPageWidth());
 		this.addObject("basePath", this.request().getContextPath()+"/");
 		this.getMetaTitle();
 		this.getMetaKeywords();
 		this.getMetaDescription();
 	}
 	
-	public HttpServletRequest request()
-	{
+	public HttpServletRequest request(){
 		return ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest(); 
 	}
-	
-	
-	
 }
