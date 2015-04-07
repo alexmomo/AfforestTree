@@ -41,3 +41,6 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+*.class
+afforesttree/WebRoot/WEB-INF/classes/conf/AfforestTree.properties
+afforesttree/WebRoot/WEB-INF/classes/conf/database.properties
