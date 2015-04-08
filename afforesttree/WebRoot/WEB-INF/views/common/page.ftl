@@ -32,10 +32,9 @@
 	 <body onload='showAllContent("","none")'>
 			<div id="showLoad" style="z-index:2; display:block; width:auto; height:auto;">“≥√Êº”‘ÿ÷–......</div>
 			<div id="showContent" style="z-index:1; ">
-	 		${page_header}
-	 		${search_box}
-	 		<#nested>
-	 		${page_bottom}
+				<@form_page.page_header/>
+	 			<#nested>
+	 			<@form_page.page_bottom/>
 	 		</div>
 	 		<script>showAllContent("none","");</script>
 	 </body>

@@ -35,7 +35,7 @@ public class AfAccountController extends BaseController {
 	@RequestMapping("login.shtml")
 	public ModelAndView loginPageRequest(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		BaseModelAndView mv = baseModelAndView("login");
-		mv.setMetaTitle("µÇÂ¼");
+		mv.setMetaTitle("login");
 		return mv;
 	}
 	
@@ -65,7 +65,7 @@ public class AfAccountController extends BaseController {
 	@RequestMapping("register.shtml")
 	public ModelAndView registerPageRequest(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		BaseModelAndView mv = baseModelAndView("register");
-		mv.setMetaTitle("×¢²á");
+		mv.setMetaTitle("register");
 		return mv;
 	}
 	
@@ -97,7 +97,7 @@ public class AfAccountController extends BaseController {
 	@RequestMapping("forgot_password.shtml")
 	public ModelAndView forgotPasswordPageRequest(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		BaseModelAndView mv = baseModelAndView("forgot_password");
-		mv.setMetaTitle("Íü¼ÇÃÜÂë");
+		mv.setMetaTitle("forgot_password");
 		return mv;
 	}
 	
@@ -112,7 +112,7 @@ public class AfAccountController extends BaseController {
 				if(accountService.isExistAccount(JUtility.strToMD5(forgotPassword.getAccountId()))){
 					forgotPasswordService.forgotPassword(forgotPassword.getAccountId(), forgotPassword.getNewAccountId(), forgotPassword.getContent());
 					mv = baseModelAndView("index");
-					mv.setMetaTitle("Ê×Ò³");
+					mv.setMetaTitle("main");
 					return mv;
 				}
 			}
@@ -123,7 +123,7 @@ public class AfAccountController extends BaseController {
 	@RequestMapping("update_password.shtml")
 	public ModelAndView updatePasswordPageRequest(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		BaseModelAndView mv = baseModelAndView("reset_password");
-		mv.setMetaTitle("ÖØÖÃÃÜÂë");
+		mv.setMetaTitle("reset_password");
 		return mv;
 	}
 	

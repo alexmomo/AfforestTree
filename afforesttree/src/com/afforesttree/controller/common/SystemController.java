@@ -32,7 +32,6 @@ public class SystemController extends BaseController {
 			response.sendRedirect("index.html");
 		}
 		mv = baseModelAndView("index");
-		mv.setMetaTitle("ÂÌ»¯Ê÷");
 		return mv;
 	}
 	
@@ -40,7 +39,6 @@ public class SystemController extends BaseController {
 	public ModelAndView reSubmitPageRequest(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		BaseModelAndView mv = null;
 		mv = baseModelAndView("re_submit");
-		mv.setMetaTitle("ÂÌ»¯Ê÷");
 		return mv;
 	}
 	
@@ -48,7 +46,7 @@ public class SystemController extends BaseController {
 	public ModelAndView errorPageRequest(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		BaseModelAndView mv = null;
 		mv = baseModelAndView("error");
-		mv.setMetaTitle("ÂÌ»¯Ê÷");
+		mv.setMetaTitle("error");
 		return mv;
 	}
 }

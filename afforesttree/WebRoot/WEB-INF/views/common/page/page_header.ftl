@@ -1,4 +1,4 @@
-<#macro page_header afAccount>
+<#macro page_header>
 	<header>
 		<div class="container clearfix">
 			<div class="row">
@@ -10,15 +10,15 @@
 				<div class="fourcol">
 				</div>
 				<div class="twocol">
-					<#if afAccount?exists>
+					<#if username?exists>
 						<h1 id="titleright">
-							<@spring.message "welcome"/><@spring.message "you"/><@spring.message "comma"/><a>${afAccount.username}</a>
+							<@spring.message "welcome"/><@spring.message "you"/><@spring.message "comma"/><a>${username}</a>
 						</h1>
 					</#if>
 				</div>
 				<div class="twocol last">
 					<h1 id="titleright">
-						<#if afAccount?exists>
+						<#if username?exists>
 							<a onclick="javascript:window.location.href='login.shtml';">
 								<@spring.message "login"/>
 							</a>

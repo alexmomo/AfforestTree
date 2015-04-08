@@ -23,6 +23,7 @@
     		classpath:/conf/application-cxf.xml
     		classpath:/conf/hibernate-context.xml
     		classpath:/conf/transaction-context.xml
+    		classpath:/conf/spring-*.xml
     	</param-value>  
   	</context-param>  
   	
@@ -102,7 +103,7 @@
 	</servlet-mapping>
 	
   	<welcome-file-list>
-    	<welcome-file>switch.html</welcome-file>
+    	<welcome-file>index.jsp</welcome-file>
   	</welcome-file-list>
   	
   	

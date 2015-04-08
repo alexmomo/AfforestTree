@@ -52,14 +52,10 @@ public class BaseController {
 	}
 	
 	public void responseTourSiteTop(){
-		String userName = CookieUtils.getCookieValue("Af_username");
-		String page_header = "";
-		if(StringUtils.checkEmpty(userName)){
-			page_header = "<header><div class=\"container clearfix\"><div class=\"row\"><div class=\"fourcol\"><h1 id=\"title\">ÂÌ»¯Ê÷ afforestTree</h1></div><div class=\"fourcol\"></div><div class=\"twocol\"><h1 id=\"titleright\">»¶Ó­Äú£¬<a>"+userName+"</a></h1></div><div class=\"twocol last\"><h1 id=\"titleright\"><a onclick=\"javascript:window.location.href='logout.do';\">ÍË³ö</a>&nbsp;&nbsp;°ïÖú&nbsp;&nbsp;<a onclick=\"javascript:window.location.href='index.html';\">·µ»ØÊ×Ò³</a></h1></div></div></div></header>";
-		}else{
-			page_header = "<header><div class=\"container clearfix\"><div class=\"row\"><div class=\"fourcol\"><h1 id=\"title\">ÂÌ»¯Ê÷ afforestTree</h1></div><div class=\"fourcol\"></div><div class=\"twocol\"></div><div class=\"twocol last\"><h1 id=\"titleright\"><a>µÇÂ¼</a>&nbsp;&nbsp;°ïÖú&nbsp;&nbsp;·µ»ØÊ×Ò³</h3></div></div></div></header>";
+		String username = CookieUtils.getCookieValue("Af_username");
+		if(username != null){
+			this.getMv().addObject("username", username);
 		}
-		this.getMv().addObject("page_header", page_header);
 	}
 	
 	public HttpServletRequest request(){
