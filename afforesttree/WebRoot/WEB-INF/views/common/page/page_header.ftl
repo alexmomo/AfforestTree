@@ -6,6 +6,9 @@
 			</a>
 			<ul class="header-nav left" role="navigation">
 				<li class="header-nav-item">
+					<img class="avatar" width="20" height="20" src="images/tree.ico">
+				</li>
+				<li class="header-nav-item">
 					<a class="header-nav-link" data-ga-click="(Logged out) Header, go to explore, text:explore" href="">GreenningTree</a>
 				</li>
 			</ul>

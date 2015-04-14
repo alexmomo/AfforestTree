@@ -13,6 +13,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.afforesttree.config.AppInitConstants;
+import com.afforesttree.util.CookieUtils;
 
 
 
@@ -106,6 +107,9 @@ public class BaseModelAndView extends ModelAndView {
 		this.addObject("websiteFilterKey", AppInitConstants.website_filter_key());
 		this.addObject("jsList", this.getJsList());
 		this.addObject("basePath", this.request().getContextPath()+"/");
+		if(CookieUtils.getCookieValue("Af_username") != null){
+			this.addObject("username", CookieUtils.getCookieValue("Af_username"));
+		}
 		this.getMetaTitle();
 		this.getMetaKeywords();
 		this.getMetaDescription();

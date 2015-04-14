@@ -52,10 +52,6 @@ public class BaseController {
 	}
 	
 	public void responseTourSiteTop(){
-		String username = CookieUtils.getCookieValue("Af_username");
-		if(username != null){
-			this.getMv().addObject("username", username);
-		}
 	}
 	
 	public HttpServletRequest request(){
