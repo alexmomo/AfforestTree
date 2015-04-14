@@ -21,22 +21,11 @@
 		<script src="${basePath}/js/jquery-1.8.2.min.js"></script>
 		<script src="${basePath}/js/jquery-ui.min.js"></script>
 		<script src="${basePath}/js/jquery.idealforms.js"></script>
-		<script language="javascript" type="text/javascript">
-		function showAllContent(status1,status2)
-		{
-		 document.getElementById("showContent").style.display=status1;
-		 document.getElementById("showLoad").style.display=status2;
-		}
-		</script>
 	 </head>
-	 <body onload='showAllContent("","none")'>
-			<div id="showLoad" style="z-index:2; display:block; width:auto; height:auto;">“≥√Êº”‘ÿ÷–......</div>
-			<div id="showContent" style="z-index:1; ">
-				<@form_page.page_header/>
-	 			<#nested>
-	 			<@form_page.page_bottom/>
-	 		</div>
-	 		<script>showAllContent("none","");</script>
+	 <body>
+		<@form_page.page_header/>
+	 	<#nested>
+	 	<@form_page.page_bottom/>
 	 </body>
  </html>
  </#macro>
