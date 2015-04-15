@@ -17,9 +17,12 @@
 						<a href="forgot_password.shtml">(forgot password)</a>
 					</label>
 					<input id="password" class="input-block" type="password" tabindex="2" name="password">
-					<input class="btn" type="submit" value="Sign in" tabindex="3" name="commit" data-disable-with="Signing in¡­" onclick="buttonSubmit(this);">
+					<input class="btn" type="submit" value="Sign in" tabindex="3" name="commit" data-disable-with="Signing in¡­" onclick="return buttonSubmit(this);">
 				</div>
 			</form>
+			<script>
+			buttonAbled();
+		</script>
 		</div>
 	</div>
 </div>
