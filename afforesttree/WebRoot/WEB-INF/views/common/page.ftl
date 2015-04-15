@@ -21,6 +21,7 @@
 		<script src="${basePath}/js/jquery-1.8.2.min.js"></script>
 		<script src="${basePath}/js/jquery-ui.min.js"></script>
 		<script src="${basePath}/js/jquery.idealforms.js"></script>
+		<script src="${basePath}/js/form.js"></script>
 	 </head>
 	 <body>
 		<@form_page.page_header/>
