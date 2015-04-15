@@ -44,3 +44,4 @@ Temporary Items
 *.class
 afforesttree/WebRoot/WEB-INF/classes/conf/AfforestTree.properties
 afforesttree/WebRoot/WEB-INF/classes/conf/database.properties
+afforesttree/.mymetadata
