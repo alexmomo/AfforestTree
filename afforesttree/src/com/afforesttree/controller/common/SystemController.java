@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.afforesttree.controller.BaseController;
 import com.afforesttree.mav.BaseModelAndView;
 import com.afforesttree.service.common.AfAccountService;
+import com.afforesttree.util.UrlUtils;
 
 
 @Controller
@@ -24,12 +25,8 @@ public class SystemController extends BaseController {
 	public ModelAndView indexPageRequest(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		BaseModelAndView mv = null;
 		if(!accountService.loginByLoginCookie(getClientHostIp(), response)){
-//			if(request.getParameter("fr") == null){
-//				return login(response, makeCodeMap(1));
-//			}else{
-//				return login(response, null);
-//			}
-			response.sendRedirect("index.html");
+			response.sendRedirect(UrlUtils.redirectUrl("login.shtml"));
+			return mv;
 		}
 		mv = baseModelAndView("index");
 		return mv;

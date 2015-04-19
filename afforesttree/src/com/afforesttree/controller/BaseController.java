@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import com.afforesttree.config.AppInitConstants;
 import com.afforesttree.mav.BaseModelAndView;
-import com.afforesttree.util.CookieUtils;
 import com.afforesttree.util.JUtility;
-import com.afforesttree.util.StringUtils;
 import com.afforesttree.util.UrlUtils;
 
 
@@ -43,11 +43,14 @@ public class BaseController {
 	}
 	
 	public void handleError(){
-		String errorCode = request().getParameter("ec");
-		if(StringUtils.checkEmpty(errorCode)){
-			if(errorCode.equals("10001")){
-				this.mv.addObject("errorMsg", "µÇÂ¼³¬Ê±£¬ÇëÖØÐÂµÇÂ¼");
+		Object o = request().getSession().getAttribute("errorCode");
+		if(o != null){
+			String errorCode = (String) o;
+			if(AppInitConstants.errorCodeExist(errorCode)){
+				System.out.println(AppInitConstants.ERROR_CODE_MAP.get(errorCode));
+				this.mv.addObject("errorCode", errorCode);
 			}
+			request().getSession().removeAttribute("errorCode");
 		}
 	}
 	
@@ -63,9 +66,8 @@ public class BaseController {
 	}
 	
 	public BaseModelAndView login(HttpServletResponse response,Map<String,String> codeMap){
-		CookieUtils.removeLoginCookie(response);
 		try {
-			response.sendRedirect(UrlUtils.redirectUrl("login",codeMap));
+			response.sendRedirect(UrlUtils.redirectUrl("login.shtml",codeMap));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -73,16 +75,6 @@ public class BaseController {
 		mv = this.baseModelAndView("login");
 		mv.setMetaTitle("Login");
 		return mv;
-	}
-	
-	public Map<String,String> makeCodeMap(int type){
-		Map<String,String> codeMap = new HashMap<String, String>();
-		if(type == 1){
-			codeMap.put("ec", "10001");
-		}else{
-			
-		}
-		return codeMap;
 	}
 }
 	

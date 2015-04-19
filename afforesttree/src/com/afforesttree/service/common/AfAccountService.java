@@ -2,14 +2,15 @@ package com.afforesttree.service.common;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.afforesttree.bean.ecom.JUser;
 import com.afforesttree.domain.common.AfAccount;
 
 
 public interface AfAccountService {
 	
-	public AfAccount login(String accountId, String password, String ip);
+	public AfAccount login(JUser jUser, String ip);
 	
-	public AfAccount register(String accountId, int registerType, String password, String ip);
+	public AfAccount register(JUser jUser, String ip);
 	
 	public AfAccount getAccount(String accountId);
 	

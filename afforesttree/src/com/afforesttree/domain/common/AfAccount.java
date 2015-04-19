@@ -51,14 +51,14 @@ public class AfAccount implements java.io.Serializable{
 	public AfAccount(){
 		
 	}
-	public AfAccount(String accountId, int registerType, String password){
-		this.accountId = JUtility.strToMD5(accountId);
-		this.username = "Af"+JUtility.getRandomNumber(8);
-		this.registerType = registerType;
+	public AfAccount(String email, String username, String password){
+		this.accountId = JUtility.strToMD5(email);
+		this.username = username;
+		this.registerType = 1;
 		if(registerType == 1){
-			this.email = accountId;
+			this.email = email;
 		}else if(registerType == 2){
-			this.mobile = accountId;
+//			this.mobile = accountId;
 		}
 		this.password = JUtility.strToMD5(password);
 		this.registerTime = new Date();

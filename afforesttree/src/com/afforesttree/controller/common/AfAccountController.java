@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.afforesttree.bean.ecom.JUser;
 import com.afforesttree.controller.BaseController;
 import com.afforesttree.domain.common.AfAccount;
 import com.afforesttree.domain.common.AfForgotPassword;
@@ -21,6 +22,7 @@ import com.afforesttree.service.common.AfForgotPasswordService;
 import com.afforesttree.util.CookieUtils;
 import com.afforesttree.util.JUtility;
 import com.afforesttree.util.StringUtils;
+import com.afforesttree.util.UrlUtils;
 
 
 @Controller
@@ -41,24 +43,28 @@ public class AfAccountController extends BaseController {
 	
 	@TokenValid
 	@RequestMapping("login.do")
-	public ModelAndView loginRequest(HttpServletRequest request,HttpServletResponse response,AfAccount afAccount) throws Exception {
+	public ModelAndView loginRequest(HttpServletRequest request,HttpServletResponse response,JUser jUser) throws Exception {
 		BaseModelAndView mv = null;
-		if(StringUtils.checkEmpty(afAccount.getAccountId()) && StringUtils.checkPassword(afAccount.getPassword())){
-			AfAccount account = accountService.login(afAccount.getAccountId(), afAccount.getPassword(), getClientHostIp());
+		if(StringUtils.checkEmail(jUser.getEmail()) && StringUtils.checkPassword(jUser.getPassword())){
+			AfAccount account = accountService.login(jUser, getClientHostIp());
 			if(account != null){
 				CookieUtils.makeLoginCookie(account, response);
-				response.sendRedirect("index.shtml");
-				mv = baseModelAndView("index");
-				mv.setMetaTitle("AfforestTree");
+				request.getSession().setAttribute("loginCookie", account.getLoginCookie());
+				response.sendRedirect(UrlUtils.redirectUrl("index.shtml"));
 				return mv;
 			}
 		}
-		return loginPageRequest(request, response);
+		UrlUtils.addErrorCode("10000");
+		response.sendRedirect(UrlUtils.redirectUrl("login.shtml"));
+		return mv;
 	}
 	
-	@RequestMapping("logout.do")
-	public ModelAndView logoutRequest(HttpServletRequest request,HttpServletResponse response,AfAccount afAccount) throws Exception {
-		return login(response, null);
+	@RequestMapping("logout.shtml")
+	public ModelAndView logoutRequest(HttpServletRequest request,HttpServletResponse response) throws Exception {
+		BaseModelAndView mv = null;
+		CookieUtils.removeLoginCookie(response);
+		response.sendRedirect(UrlUtils.redirectUrl("login.shtml"));
+		return mv;
 	}
 	
 	@Token
@@ -71,26 +77,17 @@ public class AfAccountController extends BaseController {
 	
 	@TokenValid
 	@RequestMapping("register.do")
-	public ModelAndView registerRequest(HttpServletRequest request,HttpServletResponse response,AfAccount afAccount) throws Exception {
+	public ModelAndView registerRequest(HttpServletRequest request,HttpServletResponse response,JUser jUser) throws Exception {
 		BaseModelAndView mv = null;
-		if(StringUtils.checkPassword(afAccount.getPassword())){
-			int registerType = 0;
-			if(StringUtils.checkEmail(afAccount.getAccountId())){
-				registerType = 1;
-			}else if(StringUtils.checkMobile(afAccount.getAccountId())){
-				registerType = 2;
-			}
-			if(registerType != 0){
-				String ip = getClientHostIp();
-				AfAccount account =  accountService.register(afAccount.getAccountId(), registerType, afAccount.getPassword(), ip);
-				if(account != null){
-					mv = (BaseModelAndView) loginRequest(request, response, afAccount);
-				}
+		if(StringUtils.checkEmail(jUser.getEmail()) && StringUtils.checkPassword(jUser.getPassword()) && jUser.getPassword().equals(jUser.getRePassword()) && StringUtils.checkUsername(jUser.getUsername())){
+			String ip = getClientHostIp();
+			AfAccount account =  accountService.register(jUser, ip);
+			if(account != null){
+				mv = (BaseModelAndView) loginRequest(request, response, jUser);
 			}
 		}
-		if(mv == null){
-			mv = (BaseModelAndView) registerPageRequest(request, response);
-		}
+		UrlUtils.addErrorCode("10002");
+		response.sendRedirect(UrlUtils.redirectUrl("register.shtml"));
 		return mv;
 	}
 	
@@ -117,7 +114,8 @@ public class AfAccountController extends BaseController {
 				}
 			}
 		}
-		return forgotPasswordPageRequest(request, response);
+		response.sendRedirect(UrlUtils.redirectUrl("forgot_password.shtml"));
+		return mv;
 	}
 	
 	@RequestMapping("update_password.shtml")

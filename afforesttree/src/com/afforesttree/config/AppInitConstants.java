@@ -10,6 +10,7 @@ public class AppInitConstants {
 	public static String language = DBConfig.getLanguage(); 
 	public static HashMap<String,String> CONFIG_MAP = new HashMap<String,String>();
 	public static HashMap<String, String> CODE_CN_MAP = new HashMap<String, String>();
+	public static HashMap<String, String> ERROR_CODE_MAP = new HashMap<String, String>();
 	
 	public static String DBEncoding(){
 		return getPropertiesValue("DBEncoding");
@@ -51,4 +52,7 @@ public class AppInitConstants {
 		return DBConfig.website_filter_key;
 	}
 	
+	public static boolean errorCodeExist(String errorCodeId){
+		return ERROR_CODE_MAP.containsKey(errorCodeId);
+	}
 }

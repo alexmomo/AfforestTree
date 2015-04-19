@@ -7,17 +7,20 @@
 					<input type="hidden" id="token" name="token" value="${token}">
 				</div>
 				<div class="auth-form-header">
-					<h1>Sign in</h1>
+					<h1><@spring.message "login"/></h1>
 				</div>
 				<div class="auth-form-body">
-					<label for="login_field"> Username or Email </label>
-					<input id="accountId" class="input-block" type="text" tabindex="1" name="accountId" autofocus="autofocus" autocorrect="off" autocapitalize="off">
+					<#if errorCode?exists>
+						<label for="login_field"><font color="red"> <@spring.message "error_content"+errorCode/> </font></label></br>
+					</#if>
+					<label for="login_field"> <@spring.message "email"/> </label>
+					<input id="email" class="input-block" type="text" tabindex="1" name="email" autofocus="autofocus" autocorrect="off" autocapitalize="off">
 					<label for="password">
-						Password
-						<a href="forgot_password.shtml">(forgot password)</a>
+						<@spring.message "password"/>
+						<a href="forgot_password.shtml">(<@spring.message "forgot_password"/>)</a>
 					</label>
 					<input id="password" class="input-block" type="password" tabindex="2" name="password">
-					<input class="btn" type="submit" value="Sign in" tabindex="3" name="commit" data-disable-with="Signing in¡­" onclick="return buttonSubmit(this);">
+					<input class="btn" type="submit" value="<@spring.message "login"/>" tabindex="3" name="commit" data-disable-with="<@spring.message "login"/>..." onclick="return buttonSubmit(this);">
 				</div>
 			</form>
 			<script>

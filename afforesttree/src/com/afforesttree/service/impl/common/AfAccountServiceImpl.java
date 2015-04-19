@@ -9,21 +9,23 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Service;
 
+import com.afforesttree.bean.ecom.JUser;
 import com.afforesttree.dao.common.AfAccountDao;
 import com.afforesttree.domain.common.AfAccount;
 import com.afforesttree.service.common.AfAccountService;
 import com.afforesttree.util.CacheManager;
 import com.afforesttree.util.CookieUtils;
 import com.afforesttree.util.JUtility;
+import com.afforesttree.util.UrlUtils;
 
 @Service("accountService")
 public class AfAccountServiceImpl implements AfAccountService {
 	@Resource
 	private AfAccountDao accountDao;
 	
-	public AfAccount login(String accountId, String password, String ip) {
-		if(checkAccountPassword(accountId, password)){
-			accountId = JUtility.strToMD5(accountId);
+	public AfAccount login(JUser jUser, String ip) {
+		if(checkAccountPassword(jUser.getEmail(), jUser.getPassword())){
+			String accountId = JUtility.strToMD5(jUser.getEmail());
 			AfAccount account = getAccount(accountId);
 			if(account.getLoginCookie() != null){
 				CacheManager.getInstance().removeAccountLoginCookieCache(account.getLoginCookie());
@@ -37,11 +39,12 @@ public class AfAccountServiceImpl implements AfAccountService {
 		return null;
 	}
 
-	public AfAccount register(String accountId, int registerType, String password, String ip) {
+	public AfAccount register(JUser jUser, String ip) {
+		String accountId = JUtility.strToMD5(jUser.getEmail());
 		if(getAccount(accountId) != null){
 			return null;
 		}
-		AfAccount account = new AfAccount(accountId, registerType, password);
+		AfAccount account = new AfAccount(jUser.getEmail(), jUser.getUsername(), jUser.getPassword());
 		account.setLastActiveIp(ip);
 		account = accountDao.saveAccount(account);
 		CacheManager.getInstance().putAccountCache(accountId, account);
@@ -58,7 +61,10 @@ public class AfAccountServiceImpl implements AfAccountService {
 	
 
 	public boolean loginByLoginCookie(String ip, HttpServletResponse response) {
-		String loginCookie = CookieUtils.getCookieValue("Af_loginCookie");
+		String loginCookie = (String) UrlUtils.request().getSession().getAttribute("loginCookie");
+		if(loginCookie == null){
+			loginCookie = CookieUtils.getCookieValue("Af_loginCookie");
+		}
 		if(loginCookie != null){
 			String accountId = CacheManager.getInstance().getAccountLoginCookieCache(loginCookie);
 			if(accountId != null){
