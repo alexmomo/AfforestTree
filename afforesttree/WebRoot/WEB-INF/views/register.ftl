@@ -1,4 +1,11 @@
 <@page.html> 
+<script type="text/javascript">
+$(function(){
+	$('#email').focus(function(){
+		alert(getFilters.pass.regex);
+	});
+});
+</script>
 <div class="site clearfix" role="main">
 	<div id="site-container" class="context-loader-container" data-pjax-container="">
 		<div id="login" class="auth-form">
@@ -15,6 +22,9 @@
 					</#if>
 					<label for="login_field"> <@spring.message "email"/> <font color="red" id="input_email_error"></font></label>
 					<input id="email" class="input-block" type="text" tabindex="1" name="email" autofocus="autofocus" autocorrect="off" autocapitalize="off">
+					<div id="input_password_tip" class="n_fieldtips hidden" style="z-index:199">
+						<div id="input_password_error" class="ideal_error">ÄãºÃ</div>
+					</div>
 					<label for="login_field"> <@spring.message "username"/> </label>
 					<input id="username" class="input-block" type="text" tabindex="2" name="username" autofocus="autofocus" autocorrect="off" autocapitalize="off">
 					<label for="password">
