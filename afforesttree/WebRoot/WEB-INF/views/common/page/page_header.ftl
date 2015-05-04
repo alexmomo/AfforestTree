@@ -55,7 +55,7 @@
 					</a>
 				</li>
 				<li class="header-nav-item dropdown js-menu-container">
-					<a class="header-nav-link name" data-ga-click="Header, go to profile, text:username" href="/alexmomo">
+					<a class="header-nav-link name" data-ga-click="Header, go to profile, text:username" href="setting.shtml">
 						<img class="avatar" width="20" height="20" src="images/setting.ico" data-user="9276604" alt="@alexmomo">
 					</a>
 				</li>

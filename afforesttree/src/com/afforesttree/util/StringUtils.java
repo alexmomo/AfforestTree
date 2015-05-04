@@ -22,7 +22,7 @@ public class StringUtils {
 	
 	public static boolean checkPassword(String password){
 		if(checkEmpty(password)){
-			String regex = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,32}";
+			String regex = "(?=.*\\d)(?=.*[a-zA-Z]).{6,32}";
 			return checkRegex(password, regex);
 		}
 		return false;
@@ -69,7 +69,7 @@ public class StringUtils {
 	
 	public static boolean checkUsername(String username){
 		if(checkEmpty(username)){
-			String regex = "(^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$)|(^((13[0-9])|(14[5,7])|(15[^4,\\D])|(18[0-9])|(17[0,6-8]))\\d{8}$)";
+			String regex = "^[A-Za-z0-9]{3,}$";
 			return checkRegex(username, regex);
 		}
 		return false;

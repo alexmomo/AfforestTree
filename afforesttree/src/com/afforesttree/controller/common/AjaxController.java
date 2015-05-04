@@ -35,9 +35,14 @@ public class AjaxController extends BaseController{
 			 */
 			String method = getParameter(request, "method");
 			//check accountId exist
-			if(method.equals("validateAccountIdExist")){
-				String accountId = getParameter(request, "accountId");
-				json.add(accountService.isExistAccount(JUtility.strToMD5(accountId)));
+			if(method.equals("emailValidateExist")){
+				String email = getParameter(request, "email");
+				System.out.println("email:"+email);
+				json.add(accountService.isExistEmail(email));
+			}else if(method.equals("usernameValidateExist")){
+				String username = getParameter(request, "username");
+				System.out.println("username:"+username);
+				json.add(accountService.isExistUsername(username));
 			}
 			/*
 			 * method end

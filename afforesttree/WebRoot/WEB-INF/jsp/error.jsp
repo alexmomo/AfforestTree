@@ -1,1 +1,1 @@
-<meta http-equiv='refresh' content='0;url=error.shtml'>
+<meta http-equiv='refresh' content='0;url=/afforesttree/error.shtml'>

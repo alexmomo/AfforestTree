@@ -4,6 +4,12 @@ function buttonSubmit(obj){
 	return true;
 }
 
+function buttonDisabled(){
+	$("input[type='submit']").each(function(){
+		$(this).attr("disabled",true);
+	});
+}
+
 function buttonAbled(){
 	$("input[type='submit']").each(function(){
 		$(this).attr("disabled",false);

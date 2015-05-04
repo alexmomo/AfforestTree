@@ -40,14 +40,13 @@ public class AfAccountServiceImpl implements AfAccountService {
 	}
 
 	public AfAccount register(JUser jUser, String ip) {
-		String accountId = JUtility.strToMD5(jUser.getEmail());
-		if(getAccount(accountId) != null){
+		if(isExistEmail(jUser.getEmail()) || isExistUsername(jUser.getUsername())){
 			return null;
 		}
 		AfAccount account = new AfAccount(jUser.getEmail(), jUser.getUsername(), jUser.getPassword());
 		account.setLastActiveIp(ip);
 		account = accountDao.saveAccount(account);
-		CacheManager.getInstance().putAccountCache(accountId, account);
+		CacheManager.getInstance().putAccountCache(account.getAccountId(), account);
 		return account;
 	}
 
@@ -103,5 +102,13 @@ public class AfAccountServiceImpl implements AfAccountService {
 	public void updatePassword(String accountId, String password) {
 		getAccount(accountId).setPassword(JUtility.strToMD5(password));
 		accountDao.updateAccount(getAccount(accountId));
+	}
+
+	public boolean isExistEmail(String email) {
+		return accountDao.getAccountByEmail(email) != null;
+	}
+
+	public boolean isExistUsername(String username) {
+		return accountDao.getAccountByUsername(username) != null;
 	}
 }

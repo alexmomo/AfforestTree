@@ -26,6 +26,34 @@ public class AfAccountDaoImpl  extends BaseHibernateDaoSupport implements AfAcco
 		}
 		return null;
 	}
+	
+	public AfAccount getAccountByEmail(String email)
+	{
+		List list = null;
+		String sql = " from AfAccount where email=:email";
+		Query query = getSession().createQuery(sql);
+		query.setString("email", email);
+		list = query.list();
+		if(list != null && list.size() > 0)
+		{
+			return (AfAccount)list.get(0);
+		}
+		return null;
+	}
+	
+	public AfAccount getAccountByUsername(String username)
+	{
+		List list = null;
+		String sql = " from AfAccount where username=:username";
+		Query query = getSession().createQuery(sql);
+		query.setString("username", username);
+		list = query.list();
+		if(list != null && list.size() > 0)
+		{
+			return (AfAccount)list.get(0);
+		}
+		return null;
+	}
 
 	public AfAccount saveAccount(AfAccount account) {
 		try {

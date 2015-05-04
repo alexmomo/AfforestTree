@@ -21,4 +21,8 @@ public interface AfAccountService {
 	public boolean isExistAccount(String accountId);
 	
 	public void updatePassword(String accountId, String password);
+	
+	public boolean isExistEmail(String email);
+	
+	public boolean isExistUsername(String username);
 }

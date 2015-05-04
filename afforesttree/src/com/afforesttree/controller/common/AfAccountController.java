@@ -85,9 +85,10 @@ public class AfAccountController extends BaseController {
 			if(account != null){
 				mv = (BaseModelAndView) loginRequest(request, response, jUser);
 			}
+		}else{
+			UrlUtils.addErrorCode("10002");
+			response.sendRedirect(UrlUtils.redirectUrl("register.shtml"));
 		}
-		UrlUtils.addErrorCode("10002");
-		response.sendRedirect(UrlUtils.redirectUrl("register.shtml"));
 		return mv;
 	}
 	
@@ -152,5 +153,16 @@ public class AfAccountController extends BaseController {
 		return null;
 	}
 	
+	@RequestMapping("setting.shtml")
+	public ModelAndView settingPageRequest(HttpServletRequest request,HttpServletResponse response) throws Exception {
+		response.sendRedirect(UrlUtils.redirectUrl("setting/profile.shtml"));
+		return null;
+	}
 	
+	@RequestMapping("setting/profile.shtml")
+	public ModelAndView settingProfilePageRequest(HttpServletRequest request,HttpServletResponse response) throws Exception {
+		BaseModelAndView mv = baseModelAndView("setting/profile");
+		mv.setMetaTitle("profile");
+		return mv;
+	}
 }

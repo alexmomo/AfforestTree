@@ -798,15 +798,15 @@ $.fn.idealRadioCheck = function() {
  */
 $.idealforms.errors = {
 
-  required: 'This field is required.',
+  required: '必填字段',
   number: 'Must be a number.',
   digits: 'Must be only digits.',
   name: 'Must be at least 3 characters long, and must only contain letters.',
-  username: '填写邮箱或中国大陆手机号',
-  pass: '6-32数字或字母,至少包含一个数字、一个大写字母和一个小写字母',
+  username: '3位以上数字或字母',
+  pass: '6-32数字或字母,至少包含一个数字和一个字母',
   rePass: '两次密码输入必须相同',
   strongpass: 'Must be at least 8 characters long and contain at least one uppercase and one lowercase letter and one number or special character.',
-  email: 'Must be a valid e-mail address. <em>(e.g. user@gmail.com)</em>',
+  email: '必须是一个有效的邮箱地址. </br><em>(比如 user@gmail.com)</em>',
   phone: 'Must be a valid US phone number. <em>(e.g. 555-123-4567)</em>',
   zip: 'Must be a valid US zip code. <em>(e.g. 33245 or 33245-0003)</em>',
   url: 'Must be a valid URL. <em>(e.g. www.google.com)</em>',
@@ -821,8 +821,8 @@ $.idealforms.errors = {
   excludeOption: '{0}',
   equalto: 'Must be the same value as <strong>"{0}"</strong>',
   extension: 'File(s) must have a valid extension. <em>(e.g. "{0}")</em>',
-  ajaxSuccess: '<strong>{0}</strong> is not available.',
-  ajaxError: 'Server error...'
+  ajaxSuccess: '<strong>{0}</strong> 已被使用',
+  ajaxError: '服务器错误...'
 
 }
 
@@ -1900,3 +1900,379 @@ $.extend( IdealForms.prototype, {
 })
 
 }( jQuery, window, document ))
+
+	var ideal_filters = {
+    required: {
+      regex: /.+/,
+      error: $.idealforms.errors.required
+    },
+
+    number: {
+      regex: function( i, v ) { return !isNaN(v) },
+      error: $.idealforms.errors.number
+    },
+
+    digits: {
+      regex: /^\d+$/,
+      error: $.idealforms.errors.digits
+    },
+
+    name: {
+      regex: /^[A-Za-z]{3,}$/,
+      error: $.idealforms.errors.name
+    },
+
+    username: {
+      regex: /^[A-Za-z0-9]{3,}$/,
+      error: $.idealforms.errors.username
+    },
+
+    pass: {
+      regex: /(?=.*\d)(?=.*[a-zA-Z]).{6,32}/,
+      error: $.idealforms.errors.pass
+    },
+    
+    rePass: {
+      regex: /(?=.*\d)(?=.*[a-zA-Z]).{6,32}/,
+      error: $.idealforms.errors.rePass
+    },
+
+    strongpass: {
+      regex: /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/,
+      error: $.idealforms.errors.strongpass
+    },
+
+    email: {
+      regex: /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/,
+      error: $.idealforms.errors.email
+    },
+
+    phone: {
+      regex: /^((13[0-9])|(14[5,7])|(15[^4,\D])|(18[0-9])|(17[0,6-8]))\d{8}$/,
+      error: $.idealforms.errors.phone
+    },
+
+    zip: {
+      regex: /^\d{5}$|^\d{5}-\d{4}$/,
+      error: $.idealforms.errors.zip
+    },
+
+    url: {
+      regex: /^(?:(ftp|http|https):\/\/)?(?:[\w\-]+\.)+[a-z]{2,6}([\:\/?#].*)?$/i,
+      error: $.idealforms.errors.url
+    },
+    
+    copy: {
+      regex: function( input, value){
+    		var copyId="#"+input;
+    		var copyValue=$(copyId).val();
+    		if(copyValue ==  value){
+    			return true;
+    		}
+    		return false;
+    	}
+    },
+
+    min: {
+      regex: function( input, value ) {
+        var $input = input.input,
+            min = input.userOptions.data.min,
+            isRadioCheck = $input.is('[type="checkbox"], [type="radio"]')
+        if ( isRadioCheck ) {
+          this.error = $.idealforms.errors.minOption.replace( '{0}', min )
+          return $input.filter(':checked').length >= min
+        }
+        this.error = $.idealforms.errors.minChar.replace( '{0}', min )
+        return value.length >= min
+      }
+    },
+
+    max: {
+      regex: function( input, value ) {
+        var $input = input.input,
+            max = input.userOptions.data.max,
+            isRadioCheck = $input.is('[type="checkbox"], [type="radio"]')
+        if ( isRadioCheck ) {
+          this.error = $.idealforms.errors.maxOption.replace( '{0}', max )
+          return $input.filter(':checked').length <= max
+        }
+        this.error = $.idealforms.errors.maxChar.replace( '{0}', max )
+        return value.length <= max
+      }
+    },
+
+    range: {
+      regex: function( input, value ) {
+        var range = input.userOptions.data.range,
+            val = +value
+        this.error = $.idealforms.errors.range
+          .replace( '{0}', range[0] )
+          .replace( '{1}', range[1] )
+        return val >= range[0] && val <= range[1]
+      }
+    },
+
+    date: {
+      regex: function( input, value ) {
+        var
+
+        userFormat =
+          input.userOptions.data && input.userOptions.data.date
+            ? input.userOptions.data.date
+            : 'mm/dd/yyyy', // default format
+
+        delimiter = /[^mdy]/.exec( userFormat )[0],
+        theFormat = userFormat.split(delimiter),
+        theDate = value.split(delimiter),
+
+        isDate = function( date, format ) {
+          var m, d, y
+          for ( var i = 0, len = format.length; i < len; i++ ) {
+            if ( /m/.test( format[i]) ) m = date[i]
+            if ( /d/.test( format[i]) ) d = date[i]
+            if ( /y/.test( format[i]) ) y = date[i]
+          }
+          return (
+            m > 0 && m < 13 &&
+            y && y.length === 4 &&
+            d > 0 && d <= ( new Date( y, m, 0 ) ).getDate()
+          )
+        }
+
+        this.error = $.idealforms.errors.date.replace( '{0}', userFormat )
+
+        return isDate( theDate, theFormat )
+      }
+    },
+
+    dob: {
+      regex: function( input, value ) {
+        var
+
+        userFormat =
+          input.userOptions.data && input.userOptions.data.dob
+            ? input.userOptions.data.dob
+            : 'mm/dd/yyyy', // default format
+
+        // Simulate a date input
+        dateInput = {
+          input: input.input,
+          userOptions: {
+            data: { date: userFormat }
+          }
+        },
+
+        // Use internal date filter to validate the date
+        isDate = filters.date.regex( dateInput, value ),
+
+        // DOB
+        theYear = /\d{4}/.exec( value ),
+        maxYear = new Date().getFullYear(), // Current year
+        minYear = maxYear - 100
+
+        this.error = $.idealforms.errors.dob
+
+        return isDate && theYear >= minYear && theYear <= maxYear
+      }
+    },
+
+    exclude: {
+      regex: function( input, value ) {
+        var $input = input.input,
+            exclude = input.userOptions.data.exclude,
+            isOption = $input.is('[type="checkbox"], [type="radio"], select')
+        this.error = isOption
+          ? $.idealforms.errors.excludeOption.replace( '{0}', value )
+          : this.error = $.idealforms.errors.exclude.replace( '{0}', value )
+        return $.inArray( value, exclude ) === -1
+      }
+    },
+
+    equalto: {
+      regex: function( input, value ) {
+        var $equals = $( input.userOptions.data.equalto ),
+            $input = input.input,
+            name = $equals.attr('name') || $equals.attr('id'),
+            isValid = $equals.parents('.ideal-field')
+              .filter(function(){ return $(this).data('ideal-isvalid') === true })
+              .length
+        if ( !isValid ) { return false }
+        this.error = $.idealforms.errors.equalto.replace( '{0}', name )
+        return $input.val() === $equals.val()
+      }
+    },
+
+    extension: {
+      regex: function( input, value ) {
+        var files = input.input[0].files || [{ name: value }],
+            extensions = input.userOptions.data.extension,
+            re = new RegExp( '\\.'+ extensions.join('|') +'$', 'i' ),
+            valid = false
+        for ( var i = 0, len = files.length; i < len; i++ ) {
+          valid = re.test( files[i].name );
+        }
+        this.error = $.idealforms.errors.extension.replace( '{0}', extensions.join('", "') )
+        return valid
+      }
+    },
+
+    ajax: {
+      regex: function( input, value, showOrHideError ) {
+        var self = this
+        var $input = input.input
+        var userOptions = input.userOptions
+        var name = $input.attr('name')
+        var $field = $input.parents('.ideal-field')
+        var valid = false
+        var method = input.userOptions.data.method;
+        var customErrors = userOptions.errors && userOptions.errors.ajax
+        self.error = {}
+        self.error.success = customErrors && customErrors.success
+          ? customErrors.success
+          : $.idealforms.errors.ajaxSuccess.replace( '{0}', value )
+        self.error.fail = customErrors && customErrors.error
+          ? customErrors.error
+          : $.idealforms.errors.ajaxError
+
+        // Send input name as $_POST[name]
+        var data = {}
+        data[ name ] = $.trim( value )
+        data[ 'method'] = method;
+        // Ajax options defined by the user
+        var userAjaxOps = input.userOptions.data.ajax
+        var ajaxOps = {
+          type: 'post',
+          dataType: 'json',
+          data: data,
+          success: function( resp, text, xhr ) {
+          console.log(resp)
+          	if(resp == 'false'){
+	            showOrHideError( self.error.success, true )
+	            $input.data({
+	              'ideal-ajax-resp': resp,
+	              'ideal-ajax-error': self.error.success
+	            })
+	            $input.trigger('change') // to update counter
+	            $field.removeClass('ajax')
+	            // Run custom success callback
+	            if( userAjaxOps._success ) {
+	              userAjaxOps._success( resp, text, xhr )
+	            }
+            }else{
+            	showOrHideError( self.error.success, false )
+                $input.data( 'ideal-ajax-error', self.error.success )
+                $field.removeClass('ajax')
+                // Run custom error callback
+                if ( userAjaxOps._success ) {
+                  userAjaxOps._error( xhr, text, error )
+                }
+            }
+          },
+          error: function( xhr, text, error ) {
+            if ( text !== 'abort' ) {
+              showOrHideError( self.error.fail, false )
+              $input.data( 'ideal-ajax-error', self.error.fail )
+              $field.removeClass('ajax')
+              // Run custom error callback
+              if ( userAjaxOps._error ) {
+                userAjaxOps._error( xhr, text, error )
+              }
+            }
+          }
+        }
+        $.extend( ajaxOps, userAjaxOps )
+        // Init
+        $input.removeData('ideal-ajax-error')
+        $input.removeData('ideal-ajax-resp')
+        $field.addClass('ajax')
+        // Run request and save it to be able to abort it
+        // so requests don't bubble
+        $.idealforms.ajaxRequests[ name ] = $.ajax( ajaxOps )
+      }
+    }
+  }
+	function checkForm(obj){
+		var objId = obj.attr("id");
+		var regex_content;
+		var error_content;
+		if(objId == 'email'){
+			regex_content = ideal_filters.email.regex;
+			error_content = ideal_filters.email.error;
+		}else if(objId == 'username'){
+			regex_content = ideal_filters.username.regex;
+			error_content = ideal_filters.username.error;
+		}else if(objId == 'password'){
+			regex_content = ideal_filters.pass.regex;
+			error_content = ideal_filters.pass.error;
+		}else if(objId == 'rePassword'){
+			regex_content = ideal_filters.pass.regex;
+			error_content = ideal_filters.pass.error;
+		}
+		if (obj.val() == ""){
+			$('#input_'+objId+'_tip').removeClass('hidden');
+			$('#input_'+objId+'_tip div:eq(0)').html(ideal_filters.required.error);
+			$('#'+objId+'_ideal_icon').addClass('ideal-icon-invalid');
+			$('#'+objId+'_ideal_icon').removeClass('ideal-icon-valid');
+			$('#'+objId+'_ideal_icon').removeClass('ideal-icon-ajax');
+		}else if(!regex_content.test(obj.val())){
+			$('#input_'+objId+'_tip').removeClass('hidden');
+			$('#input_'+objId+'_tip div:eq(0)').html(error_content);
+			$('#'+objId+'_ideal_icon').addClass('ideal-icon-invalid');
+			$('#'+objId+'_ideal_icon').removeClass('ideal-icon-valid');
+			$('#'+objId+'_ideal_icon').removeClass('ideal-icon-ajax');
+		}else if(obj.data("copyWith") != null && !ideal_filters.copy.regex(objId , $("#"+obj.data("copyWith")).val())){
+			if(objId == 'rePassword'){
+				error_content = ideal_filters.rePass.error;
+			}
+			$('#input_'+objId+'_tip').removeClass('hidden');
+			$('#input_'+objId+'_tip div:eq(0)').html(error_content);
+			$('#'+objId+'_ideal_icon').addClass('ideal-icon-invalid');
+			$('#'+objId+'_ideal_icon').removeClass('ideal-icon-valid');
+			$('#'+objId+'_ideal_icon').removeClass('ideal-icon-ajax');
+		}else{
+			if(obj.data("ajaxMethod") != null){
+				$('#input_'+objId+'_tip').addClass('hidden');
+				$('#'+objId+'_ideal_icon').removeClass('ideal-icon-invalid');
+				$('#'+objId+'_ideal_icon').removeClass('ideal-icon-valid');
+				$('#'+objId+'_ideal_icon').addClass('ideal-icon-ajax');
+				var data = {}
+		        data[ objId ] = $.trim( obj.val() )
+		        data[ 'method'] = obj.data("ajaxMethod");
+				var ajaxOps = {
+				  url: 'ajax.do',
+		          type: 'post',
+		          dataType: 'json',
+		          data: data,
+		          success: function( resp, text, xhr ) {
+		          	if(resp == 'false'){
+			            $('#'+objId+'_ideal_icon').removeClass('ideal-icon-invalid');
+						$('#'+objId+'_ideal_icon').addClass('ideal-icon-valid');
+						$('#'+objId+'_ideal_icon').removeClass('ideal-icon-ajax');
+						return true;
+		            }else{
+		            	$('#input_'+objId+'_tip').removeClass('hidden');
+						$('#input_'+objId+'_tip div:eq(0)').html($.idealforms.errors.ajaxSuccess.replace( '{0}', obj.val() ));
+		            	$('#'+objId+'_ideal_icon').addClass('ideal-icon-invalid');
+						$('#'+objId+'_ideal_icon').removeClass('ideal-icon-valid');
+						$('#'+objId+'_ideal_icon').removeClass('ideal-icon-ajax');
+		            }
+		          },
+		          error: function( xhr, text, error ) {
+		          	$('#input_'+objId+'_tip').removeClass('hidden');
+					$('#input_'+objId+'_tip div:eq(0)').html($.idealforms.errors.ajaxError);
+		            $('#'+objId+'_ideal_icon').addClass('ideal-icon-invalid');
+					$('#'+objId+'_ideal_icon').removeClass('ideal-icon-valid');
+					$('#'+objId+'_ideal_icon').removeClass('ideal-icon-ajax');
+		          }
+		        }
+		        $.ajax( ajaxOps );
+			}else{
+				$('#input_'+objId+'_tip').addClass('hidden');
+				$('#'+objId+'_ideal_icon').removeClass('ideal-icon-invalid');
+				$('#'+objId+'_ideal_icon').addClass('ideal-icon-valid');
+				$('#'+objId+'_ideal_icon').removeClass('ideal-icon-ajax');
+				return true;
+			}
+		}
+		return false;
+	}

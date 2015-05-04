@@ -2,10 +2,11 @@
 /* ! The 1140px Grid V2 by Andy Taylor \ http://cssgrid.net \ http://www.twitter.com/andytlr \ http://www.andytlr.com   */
 /* ==================================================================================================================== */
 
+/*
 .container {
 padding-left: 20px;
 padding-right: 20px;
-}
+}*/
 
 .row {
 width: 100%;
@@ -124,7 +125,7 @@ img {
 
 }
 
-/* http://www.yuiblog.com/blog/2010/09/27/clearfix-reloaded-overflowhidden-demystified */
+/* http://www.yuiblog.com/blog/2010/09/27/clearfix-reloaded-overflowhidden-demystified 
 
 .clearfix:before,
 .clearfix:after {
@@ -139,7 +140,7 @@ img {
 .clearfix:after {
   clear: both;
 }
-
+*/
 /*
   The following zoom:1 rule is specifically for IE6 + IE7.
   Move to separate stylesheet if invalid CSS is a problem.
