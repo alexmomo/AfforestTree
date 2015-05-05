@@ -2,6 +2,7 @@ package com.afforesttree.framework.token;
 
 import java.lang.reflect.Method;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -9,9 +10,14 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.afforesttree.framework.annotation.TokenValid;
+import com.afforesttree.service.common.AfAccountService;
+
 
 public class TokenValidInterceptor implements HandlerInterceptor{
-	 
+	@Resource
+	private AfAccountService accountService; 
+	
     public void afterCompletion(HttpServletRequest request,
             HttpServletResponse response, Object arg2, Exception arg3)
             throws Exception {

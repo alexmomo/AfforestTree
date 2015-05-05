@@ -2,7 +2,6 @@ package com.afforesttree.controller.common;
 
 
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,23 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.afforesttree.controller.BaseController;
+import com.afforesttree.framework.annotation.LoginCookieValid;
 import com.afforesttree.mav.BaseModelAndView;
-import com.afforesttree.service.common.AfAccountService;
-import com.afforesttree.util.UrlUtils;
-
 
 @Controller
 public class SystemController extends BaseController {
-	@Resource
-	private AfAccountService accountService;
 
+	@LoginCookieValid
 	@RequestMapping("index.shtml")
 	public ModelAndView indexPageRequest(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		BaseModelAndView mv = null;
-		if(!accountService.loginByLoginCookie(getClientHostIp(), response)){
-			response.sendRedirect(UrlUtils.redirectUrl("login.shtml"));
-			return mv;
-		}
 		mv = baseModelAndView("index");
 		return mv;
 	}

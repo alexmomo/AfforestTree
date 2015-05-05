@@ -32,14 +32,12 @@ public class TokenHandler {
     @SuppressWarnings("unchecked")
     public static boolean validToken(HttpServletRequest request) {
         String inputToken = getInputToken(request);
-//        System.out.println("---->3:"+inputToken);
         if (inputToken == null) {
             logger.warn("token is not valid!inputToken is NULL");
             return false;
         }
         HttpSession session = request.getSession();
         String tokenSession = (String) session.getAttribute(Constants.DEFAULT_TOKEN_NAME);
-//        System.out.println("---->4:"+tokenSession);
         if(tokenSession == null || !tokenSession.equals(inputToken)){
         	return false;
         }

@@ -372,7 +372,7 @@ element.style {
     font-size: 13px;
     min-height: 34px;
     outline: medium none;
-    padding: 0px 0px;
+    padding: 7px 8px;
     vertical-align: middle;
 }
 .form-control.focus, .form-control:focus, input.focus[type="text"], input[type="text"]:focus, .focused .drag-and-drop, input.focus[type="password"], input[type="password"]:focus, input.focus[type="email"], input[type="email"]:focus, input.focus[type="number"], input[type="number"]:focus, input.focus[type="tel"], input[type="tel"]:focus, input.focus[type="url"], input[type="url"]:focus, textarea.focus, textarea:focus {

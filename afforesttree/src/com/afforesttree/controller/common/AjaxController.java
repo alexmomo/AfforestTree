@@ -37,11 +37,9 @@ public class AjaxController extends BaseController{
 			//check accountId exist
 			if(method.equals("emailValidateExist")){
 				String email = getParameter(request, "email");
-				System.out.println("email:"+email);
 				json.add(accountService.isExistEmail(email));
 			}else if(method.equals("usernameValidateExist")){
 				String username = getParameter(request, "username");
-				System.out.println("username:"+username);
 				json.add(accountService.isExistUsername(username));
 			}
 			/*

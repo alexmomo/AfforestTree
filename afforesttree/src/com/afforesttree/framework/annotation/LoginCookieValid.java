@@ -1,4 +1,4 @@
-package com.afforesttree.framework.token;
+package com.afforesttree.framework.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.RetentionPolicy;
@@ -11,6 +11,6 @@ import java.lang.annotation.Target;
 @Inherited
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface TokenValid {
+public @interface LoginCookieValid {
     boolean validate() default true;
 }

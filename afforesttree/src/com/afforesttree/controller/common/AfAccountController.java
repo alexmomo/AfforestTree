@@ -14,8 +14,9 @@ import com.afforesttree.bean.ecom.JUser;
 import com.afforesttree.controller.BaseController;
 import com.afforesttree.domain.common.AfAccount;
 import com.afforesttree.domain.common.AfForgotPassword;
-import com.afforesttree.framework.token.Token;
-import com.afforesttree.framework.token.TokenValid;
+import com.afforesttree.framework.annotation.LoginCookieValid;
+import com.afforesttree.framework.annotation.Token;
+import com.afforesttree.framework.annotation.TokenValid;
 import com.afforesttree.mav.BaseModelAndView;
 import com.afforesttree.service.common.AfAccountService;
 import com.afforesttree.service.common.AfForgotPasswordService;
@@ -151,18 +152,5 @@ public class AfAccountController extends BaseController {
 			}
 		}
 		return null;
-	}
-	
-	@RequestMapping("setting.shtml")
-	public ModelAndView settingPageRequest(HttpServletRequest request,HttpServletResponse response) throws Exception {
-		response.sendRedirect(UrlUtils.redirectUrl("setting/profile.shtml"));
-		return null;
-	}
-	
-	@RequestMapping("setting/profile.shtml")
-	public ModelAndView settingProfilePageRequest(HttpServletRequest request,HttpServletResponse response) throws Exception {
-		BaseModelAndView mv = baseModelAndView("setting/profile");
-		mv.setMetaTitle("profile");
-		return mv;
 	}
 }

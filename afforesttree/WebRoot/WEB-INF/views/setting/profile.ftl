@@ -8,14 +8,14 @@
 					<div class="boxed-group">
 						<h3>Public profile</h3>
 						<div class="boxed-group-inner clearfix">
-						<form id="profile_9276604" class="columns js-uploadable-container js-upload-avatar-image is-default" method="post" data-upload-policy-url="/upload/policies/avatars" action="/users/alexmomo" accept-charset="UTF-8">
+						<form id="profile_9276604" class="columns js-uploadable-container js-upload-avatar-image is-default" method="post" data-upload-policy-url="/upload/policies/avatars" action="setting/profile.do" accept-charset="UTF-8">
 							<div class="column two-thirds">
 							<dl class="form">
 							<dt>
 							<label for="user_profile_name">Name</label>
 							</dt>
 							<dd>
-							<input id="user_profile_name" type="text" value="Tirion" size="30" name="user[profile_name]">
+							<input id="username" type="text" value="${profile.username}" size="30" name="username">
 							</dd>
 							</dl>
 							<dl class="form">

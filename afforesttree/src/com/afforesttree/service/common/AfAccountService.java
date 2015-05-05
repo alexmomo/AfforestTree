@@ -2,6 +2,7 @@ package com.afforesttree.service.common;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.afforesttree.bean.ecom.JSettingProfile;
 import com.afforesttree.bean.ecom.JUser;
 import com.afforesttree.domain.common.AfAccount;
 
@@ -20,9 +21,13 @@ public interface AfAccountService {
 	
 	public boolean isExistAccount(String accountId);
 	
+	public void updateAccount(AfAccount account);
+	
 	public void updatePassword(String accountId, String password);
 	
 	public boolean isExistEmail(String email);
 	
 	public boolean isExistUsername(String username);
+	
+	public AfAccount settingProfile(JSettingProfile jSettingProfile);
 }

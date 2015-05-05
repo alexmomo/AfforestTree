@@ -26,6 +26,17 @@ public class CookieUtils {
 		clearSimpleCookie("Af_loginCookie", response);
 	}
 	
+	public static String getAccountId(){
+		return getCookieValue("Af_accountId");
+	}
+	
+	public static String getUsername(){
+		return getCookieValue("Af_username");
+	}
+	
+	public static String getLoginCookie(){
+		return getCookieValue("Af_loginCookie");
+	}
 	
 	public static String getCookieValue(String cookieName){
 		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest(); 

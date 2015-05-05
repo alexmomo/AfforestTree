@@ -2,16 +2,25 @@ package com.afforesttree.framework.token;
 
 import java.lang.reflect.Method;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.afforesttree.controller.BaseController;
+import com.afforesttree.framework.annotation.LoginCookieValid;
+import com.afforesttree.framework.annotation.Token;
+import com.afforesttree.service.common.AfAccountService;
+import com.afforesttree.util.UrlUtils;
 
-public class TokenHandlerInterceptor implements HandlerInterceptor{
-	 
+@Controller
+public class TokenHandlerInterceptor extends BaseController implements HandlerInterceptor{
+	@Resource
+	private AfAccountService accountService;
 	 
     public void afterCompletion(HttpServletRequest arg0,
             HttpServletResponse arg1, Object arg2, Exception arg3)
@@ -36,7 +45,13 @@ public class TokenHandlerInterceptor implements HandlerInterceptor{
         if (annotation != null) {
         	TokenHandler.generateGUID(request.getSession());
         }
-    	return true;
+        if(method.getAnnotation(LoginCookieValid.class) != null){
+        	if(!accountService.loginByLoginCookie(getClientHostIp(), response)){
+    			response.sendRedirect(UrlUtils.redirectUrl("login.shtml"));
+    			return false;
+    		}
+        }
+        return true;
     }
  
 }

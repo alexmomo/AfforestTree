@@ -107,8 +107,8 @@ public class BaseModelAndView extends ModelAndView {
 		this.addObject("websiteFilterKey", AppInitConstants.website_filter_key());
 		this.addObject("jsList", this.getJsList());
 		this.addObject("basePath", this.request().getContextPath()+"/");
-		if(CookieUtils.getCookieValue("Af_username") != null){
-			this.addObject("username", CookieUtils.getCookieValue("Af_username"));
+		if(CookieUtils.getUsername() != null){
+			this.addObject("username", CookieUtils.getUsername());
 		}
 		this.getMetaTitle();
 		this.getMetaKeywords();

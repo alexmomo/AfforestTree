@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Service;
 
+import com.afforesttree.bean.ecom.JSettingProfile;
 import com.afforesttree.bean.ecom.JUser;
 import com.afforesttree.dao.common.AfAccountDao;
 import com.afforesttree.domain.common.AfAccount;
@@ -62,7 +63,7 @@ public class AfAccountServiceImpl implements AfAccountService {
 	public boolean loginByLoginCookie(String ip, HttpServletResponse response) {
 		String loginCookie = (String) UrlUtils.request().getSession().getAttribute("loginCookie");
 		if(loginCookie == null){
-			loginCookie = CookieUtils.getCookieValue("Af_loginCookie");
+			loginCookie = CookieUtils.getLoginCookie();
 		}
 		if(loginCookie != null){
 			String accountId = CacheManager.getInstance().getAccountLoginCookieCache(loginCookie);
@@ -71,8 +72,8 @@ public class AfAccountServiceImpl implements AfAccountService {
 				if(account != null){
 					if(ip.equals(account.getLastActiveIp()) && (new Date().getTime() - account.getLastActiveTime().getTime()) < 3600000){
 						account.setLastActiveTime(new Date());
-						String accountIdCookie = CookieUtils.getCookieValue("Af_accountId");
-						String usernameCookie = CookieUtils.getCookieValue("Af_username");
+						String accountIdCookie = CookieUtils.getAccountId();
+						String usernameCookie = CookieUtils.getUsername();
 						if(accountIdCookie == null || !accountIdCookie.equals(account.getAccountId()) || usernameCookie== null || !usernameCookie.equals(account.getUsername())){
 							CookieUtils.makeLoginCookie(account, response);
 						}
@@ -110,5 +111,15 @@ public class AfAccountServiceImpl implements AfAccountService {
 
 	public boolean isExistUsername(String username) {
 		return accountDao.getAccountByUsername(username) != null;
+	}
+
+	public void updateAccount(AfAccount account) {
+		accountDao.updateAccount(account);
+	}
+
+	public AfAccount settingProfile(JSettingProfile jSettingProfile) {
+		AfAccount account = getAccount(CookieUtils.getAccountId());
+		updateAccount(jSettingProfile.updateAccount(account));
+		return account;
 	}
 }
