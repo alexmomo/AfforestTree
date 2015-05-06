@@ -3977,19 +3977,22 @@ function changeCity(provinceId,cityId,regionId,grade,defaultArea){
 				city_options[option_text] = g;
 			}  
 		}
+		var defaultArea_c = defaultArea;
+		if(defaultArea != null && defaultArea.length == 6){
+			if(grade == 0){
+				defaultArea_c = defaultArea.substring(0,2) + "0000";
+			}else if(grade == 1){
+				defaultArea_c = defaultArea.substring(0,4) + "00";
+			}
+		}
 		for(var j=0; j<city_temp_array.length; j++){
 			var o_text = city_temp_array[j];
 			var o_value = city_options[o_text];
 			var o = document.createElement("option");
 			o.value = o_value;
 			o.innerHTML = o_text;
-			if(defaultArea != null){
-				if(grade == 0){
-					defaultArea = defaultArea.substring(0,2) + "0000";
-				}else if(grade == 1){
-					defaultArea = defaultArea.substring(0,4) + "00";
-				}
-				if(o_value == defaultArea){
+			if(defaultArea != null && defaultArea.length == 6){
+				if(o_value == defaultArea_c){
 					o.selected = true;
 				}
 			}

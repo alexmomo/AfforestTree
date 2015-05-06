@@ -29,6 +29,7 @@ public class AfAccount implements java.io.Serializable{
 	private int role;
 	private int status;
 	private String mobile;
+	private int sex;
 	private String area;
 	@Column(name = "register_type")
 	private int registerType;
@@ -62,6 +63,7 @@ public class AfAccount implements java.io.Serializable{
 		}
 		this.password = JUtility.strToMD5(password);
 		this.registerTime = new Date();
+		this.sex = 0;
 		this.exp = 0;
 		this.role = 1;
 		this.status = 1;
@@ -129,6 +131,12 @@ public class AfAccount implements java.io.Serializable{
 	}
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
+	}
+	public int getSex() {
+		return sex;
+	}
+	public void setSex(int sex) {
+		this.sex = sex;
 	}
 	public String getArea() {
 		return area;
