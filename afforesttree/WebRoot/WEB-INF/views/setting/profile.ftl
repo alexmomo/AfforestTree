@@ -39,6 +39,16 @@
 							<label for="user_profile_location">Location</label>
 							</dt>
 							<dd>
+							<script type="text/javascript" src="${basePath}js/city_map.js" charset="gbk"></script>
+							<select id="province" name="province" onchange="changeCity('province','city','region',1,null);">
+							</select>
+							<select id="city" name="city" onchange="changeCity('province','city','region',2,null);">
+							</select>
+							<select id="region" name="region">
+							</select>
+							<script type="text/javascript">
+								changeCity('province','city','region',0,null);
+							</script>
 							<input id="user_profile_location" type="text" value="China.ZheJiang.HangZhou" size="30" name="user[profile_location]">
 							</dd>
 							</dl>
