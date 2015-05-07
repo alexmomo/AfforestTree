@@ -45,8 +45,6 @@ public class AfSettingController extends BaseController {
 	@LoginCookieValid
 	@RequestMapping("setting/profile.do")
 	public ModelAndView settingProfileRequest(HttpServletRequest request,HttpServletResponse response,JSettingProfile jSettingProfile) throws Exception {
-//		user.setUserId(new String(user.getUserId().getBytes("ISO-8859-1"),0,user.getUserId().getBytes("ISO-8859-1").length,"GBK"));
-		System.out.println(new String(jSettingProfile.getRealName().getBytes("ISO-8859-1"),"UTF-8"));
 		AfAccount account = accountService.settingProfile(jSettingProfile);
 		CookieUtils.makeLoginCookie(account, response);
 		response.sendRedirect(UrlUtils.redirectUrl("setting/profile.shtml"));
