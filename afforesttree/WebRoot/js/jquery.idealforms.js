@@ -2191,8 +2191,39 @@ $.extend( IdealForms.prototype, {
       }
     }
   }
+
+
+	function showOrHideIdealError(objId,valid,ajax,error_content){
+		if(ajax){
+			$('#input_'+objId+'_error').addClass('hidden');
+			$('#'+objId+'_ideal_icon').removeClass('ideal-icon-invalid');
+			$('#'+objId+'_ideal_icon').removeClass('ideal-icon-valid');
+			$('#'+objId+'_ideal_icon').addClass('ideal-icon-ajax');
+		}else{
+			if(valid){
+				$('#input_'+objId+'_error').addClass('hidden');
+				$('#'+objId+'_ideal_icon').removeClass('ideal-icon-invalid');
+				$('#'+objId+'_ideal_icon').addClass('ideal-icon-valid');
+				$('#'+objId+'_ideal_icon').removeClass('ideal-icon-ajax');
+			}else{
+				$('#input_'+objId+'_error').removeClass('hidden');
+				$('#input_'+objId+'_error').html(error_content);
+				$('#'+objId+'_ideal_icon').addClass('ideal-icon-invalid');
+				$('#'+objId+'_ideal_icon').removeClass('ideal-icon-valid');
+				$('#'+objId+'_ideal_icon').removeClass('ideal-icon-ajax');
+			}
+		}
+	
+	}
+	
 	function checkForm(obj){
 		var objId = obj.attr("id");
+		if(obj.data("idealValue") != null){
+			if(obj.data("idealValue") == obj.val()){
+				showOrHideIdealError(objId,true,false,'');
+				return true;
+			}
+		}
 		var regex_content;
 		var error_content;
 		if(objId == 'email'){
@@ -2208,33 +2239,18 @@ $.extend( IdealForms.prototype, {
 			regex_content = ideal_filters.pass.regex;
 			error_content = ideal_filters.pass.error;
 		}
-		if (obj.val() == ""){
-			$('#input_'+objId+'_tip').removeClass('hidden');
-			$('#input_'+objId+'_tip div:eq(0)').html(ideal_filters.required.error);
-			$('#'+objId+'_ideal_icon').addClass('ideal-icon-invalid');
-			$('#'+objId+'_ideal_icon').removeClass('ideal-icon-valid');
-			$('#'+objId+'_ideal_icon').removeClass('ideal-icon-ajax');
+		if (obj.data("required") == true && obj.val() == ""){
+			showOrHideIdealError(objId,false,false,ideal_filters.required.error);
 		}else if(!regex_content.test(obj.val())){
-			$('#input_'+objId+'_tip').removeClass('hidden');
-			$('#input_'+objId+'_tip div:eq(0)').html(error_content);
-			$('#'+objId+'_ideal_icon').addClass('ideal-icon-invalid');
-			$('#'+objId+'_ideal_icon').removeClass('ideal-icon-valid');
-			$('#'+objId+'_ideal_icon').removeClass('ideal-icon-ajax');
+			showOrHideIdealError(objId,false,false,error_content);
 		}else if(obj.data("copyWith") != null && !ideal_filters.copy.regex(objId , $("#"+obj.data("copyWith")).val())){
 			if(objId == 'rePassword'){
 				error_content = ideal_filters.rePass.error;
 			}
-			$('#input_'+objId+'_tip').removeClass('hidden');
-			$('#input_'+objId+'_tip div:eq(0)').html(error_content);
-			$('#'+objId+'_ideal_icon').addClass('ideal-icon-invalid');
-			$('#'+objId+'_ideal_icon').removeClass('ideal-icon-valid');
-			$('#'+objId+'_ideal_icon').removeClass('ideal-icon-ajax');
+			showOrHideIdealError(objId,false,false,error_content);
 		}else{
 			if(obj.data("ajaxMethod") != null){
-				$('#input_'+objId+'_tip').addClass('hidden');
-				$('#'+objId+'_ideal_icon').removeClass('ideal-icon-invalid');
-				$('#'+objId+'_ideal_icon').removeClass('ideal-icon-valid');
-				$('#'+objId+'_ideal_icon').addClass('ideal-icon-ajax');
+				$showOrHideIdealError(objId,false,true,'');
 				var data = {}
 		        data[ objId ] = $.trim( obj.val() )
 		        data[ 'method'] = obj.data("ajaxMethod");
@@ -2245,34 +2261,33 @@ $.extend( IdealForms.prototype, {
 		          data: data,
 		          success: function( resp, text, xhr ) {
 		          	if(resp == 'false'){
-			            $('#'+objId+'_ideal_icon').removeClass('ideal-icon-invalid');
-						$('#'+objId+'_ideal_icon').addClass('ideal-icon-valid');
-						$('#'+objId+'_ideal_icon').removeClass('ideal-icon-ajax');
+		          		showOrHideIdealError(objId,true,false,'');
 						return true;
 		            }else{
-		            	$('#input_'+objId+'_tip').removeClass('hidden');
-						$('#input_'+objId+'_tip div:eq(0)').html($.idealforms.errors.ajaxSuccess.replace( '{0}', obj.val() ));
-		            	$('#'+objId+'_ideal_icon').addClass('ideal-icon-invalid');
-						$('#'+objId+'_ideal_icon').removeClass('ideal-icon-valid');
-						$('#'+objId+'_ideal_icon').removeClass('ideal-icon-ajax');
+		            	showOrHideIdealError(objId,false,false,$.idealforms.errors.ajaxSuccess.replace('{0}', obj.val()));
 		            }
 		          },
 		          error: function( xhr, text, error ) {
-		          	$('#input_'+objId+'_tip').removeClass('hidden');
-					$('#input_'+objId+'_tip div:eq(0)').html($.idealforms.errors.ajaxError);
-		            $('#'+objId+'_ideal_icon').addClass('ideal-icon-invalid');
-					$('#'+objId+'_ideal_icon').removeClass('ideal-icon-valid');
-					$('#'+objId+'_ideal_icon').removeClass('ideal-icon-ajax');
+		        	  showOrHideIdealError(objId,false,false,$.idealforms.errors.ajaxError);
 		          }
 		        }
 		        $.ajax( ajaxOps );
 			}else{
-				$('#input_'+objId+'_tip').addClass('hidden');
-				$('#'+objId+'_ideal_icon').removeClass('ideal-icon-invalid');
-				$('#'+objId+'_ideal_icon').addClass('ideal-icon-valid');
-				$('#'+objId+'_ideal_icon').removeClass('ideal-icon-ajax');
+				showOrHideIdealError(objId,true,false,'');
 				return true;
 			}
 		}
 		return false;
+	}
+
+	function idealform_init(checkArray,ideals_options,need_check){
+		for(var i = 0;i<checkArray.length;i++){
+			$('#'+checkArray[i]).after("<i id='" + checkArray[i] + "_ideal_icon' class='ideal-icon ideal-icon-invalid' style='display: block'></i><div id='input_" + checkArray[i] + "_error' class='ideal_error hidden' style='z-index:199'></div>");
+		}
+		
+		if(need_check){
+			for(var i = 0;i<checkArray.length;i++){
+				checkForm($('#'+checkArray[i]));
+			}
+		}
 	}

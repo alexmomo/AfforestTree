@@ -2,7 +2,7 @@
 	<div class="column one-fourth" role="navigation">
 		<nav class="menu" data-pjax="">
 			<h3 class="menu-heading"> Personal settings </h3>
-			<a class="<#if selectedLink == 'profile'>selected </#if>js-selected-navigation-item menu-item" data-selected-links="avatar_settings /setting/profile" href="setting/profile.shtml">Profile</a>
+			<a class="<#if selectedLink == 'profile'>selected </#if>js-selected-navigation-item menu-item" data-selected-links="avatar_settings /setting/profile" href="setting/profile.shtml"><@spring.message "profile"/></a>
 			<a class="js-selected-navigation-item menu-item" data-selected-links=" /settings/admin" href="/settings/admin">Account settings</a>
 			<a class="js-selected-navigation-item menu-item" data-selected-links=" /settings/emails" href="/settings/emails"> Emails </a>
 			<a class="js-selected-navigation-item menu-item" data-selected-links=" /settings/notifications" href="/settings/notifications">Notification center</a>
