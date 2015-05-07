@@ -23,7 +23,7 @@
 				</ul>
 				<ul class="site-footer-links right" style="padding-right:25%">
 					<li>
-						<img class="avatar" width="20" height="20" src="images/tree.ico">
+						<img class="avatar" width="20" height="20" src="/images/tree.ico">
 					</li>
 				</ul>
 				<ul class="site-footer-links">
