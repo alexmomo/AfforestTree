@@ -100,7 +100,7 @@
         	filters: 'required username',
         	data: {
           		ajax: { url:'usernameValidateExist' }
-        	}
+        	},
         	default: '${profile.username}'
       	}
 	}
