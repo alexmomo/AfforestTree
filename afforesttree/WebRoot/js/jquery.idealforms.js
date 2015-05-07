@@ -2250,7 +2250,7 @@ $.extend( IdealForms.prototype, {
 			showOrHideIdealError(objId,false,false,error_content);
 		}else{
 			if(obj.data("ajaxMethod") != null){
-				$showOrHideIdealError(objId,false,true,'');
+				showOrHideIdealError(objId,false,true,'');
 				var data = {}
 		        data[ objId ] = $.trim( obj.val() )
 		        data[ 'method'] = obj.data("ajaxMethod");
@@ -2284,7 +2284,21 @@ $.extend( IdealForms.prototype, {
 		for(var i = 0;i<checkArray.length;i++){
 			$('#'+checkArray[i]).after("<i id='" + checkArray[i] + "_ideal_icon' class='ideal-icon ideal-icon-invalid' style='display: block'></i><div id='input_" + checkArray[i] + "_error' class='ideal_error hidden' style='z-index:199'></div>");
 		}
-		
+		for(var i = 0;i<checkArray.length;i++){
+			if(ideals_options[checkArray[i]].filters != null){
+				$('#'+checkArray[i]).data("filters",ideals_options[checkArray[i]].filters);
+			}
+			if(ideals_options[checkArray[i]].data != null){
+				if(ideals_options[checkArray[i]].data.ajax != null){
+					if(ideals_options[checkArray[i]].data.ajax.url != null){
+						$('#'+checkArray[i]).data("ajax-method",ideals_options[checkArray[i]].data.ajax.url);
+					}
+				}
+				if(ideals_options[checkArray[i]].data.defaultValue != null){
+					$('#'+checkArray[i]).data("ideal-value",ideals_options[checkArray[i]].data.defaultValue);
+				}
+			}
+		}
 		if(need_check){
 			for(var i = 0;i<checkArray.length;i++){
 				checkForm($('#'+checkArray[i]));

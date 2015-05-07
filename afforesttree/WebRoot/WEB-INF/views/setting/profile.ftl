@@ -15,7 +15,7 @@
 									<label for="user_profile_name"><@spring.message "username"/></label>
 								</dt>
 								<dd>
-									<input id="username" class="input-block" type="text" tabindex="1" name="username" autofocus="autofocus" autocorrect="off" autocapitalize="off" data-required="true" data-ideal-value="${profile.username}" data-ajax-method="usernameValidateExist" value="${profile.username}" size="30">
+									<input id="username" class="input-block" type="text" tabindex="1" name="username" autofocus="autofocus" autocorrect="off" autocapitalize="off" data-required="true" value="${profile.username}" size="30">
 								</dd>
 							</dl>
 							<dl class="form ideal-wrap">
@@ -99,9 +99,9 @@
       	'username': {
         	filters: 'required username',
         	data: {
-          		ajax: { url:'usernameValidateExist' }
-        	},
-        	default: '${profile.username}'
+          		ajax: { url:'usernameValidateExist' },
+          		defaultValue: '${profile.username}'
+        	}
       	}
 	}
 	
