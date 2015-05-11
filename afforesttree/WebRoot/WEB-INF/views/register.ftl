@@ -18,7 +18,7 @@
 							<label for="login_field"> <@spring.message "email"/></label>
 						</dt>
 						<dd>
-							<input id="email" class="input-block" type="text" tabindex="1" name="email" autofocus="autofocus" autocorrect="off" autocapitalize="off" data-required="true" data-ajax-method="emailValidateExist">
+							<input id="email" class="input-block" type="text" tabindex="1" name="email" autofocus="autofocus" autocorrect="off" autocapitalize="off">
 						</dd>
 					</dl>
 					<dl class="form ideal-wrap">
@@ -26,7 +26,7 @@
 							<label for="login_field"> <@spring.message "username"/></label>
 						</dt>
 						<dd>
-							<input id="username" class="input-block" type="text" tabindex="2" name="username" autofocus="autofocus" autocorrect="off" autocapitalize="off" data-required="true" data-ajax-method="usernameValidateExist">
+							<input id="username" class="input-block" type="text" tabindex="2" name="username" autofocus="autofocus" autocorrect="off" autocapitalize="off">
 						</dd>
 					</dl>
 					<dl class="form ideal-wrap">
@@ -34,7 +34,7 @@
 							<label for="password"><@spring.message "password"/></label>
 						</dt>
 						<dd>
-							<input id="password" class="input-block" type="password" tabindex="3" name="password" data-required="true">
+							<input id="password" class="input-block" type="password" tabindex="3" name="password">
 						</dd>
 					</dl>
 					<dl class="form ideal-wrap">
@@ -42,7 +42,7 @@
 							<label for="password"><@spring.message "re_password"/></label>
 						</dt>
 						<dd>
-							<input id="rePassword" class="input-block" type="password" tabindex="4" name="rePassword" data-copy-with="password" data-required="true">
+							<input id="rePassword" class="input-block" type="password" tabindex="4" name="rePassword" data-copy-with="password">
 						</dd>
 					</dl>
 					<input class="btn" type="submit" value="<@spring.message "register"/>" tabindex="5" name="commit" data-disable-with="<@spring.message "register"/>..." onclick="return submitRegister(this);">
@@ -74,7 +74,6 @@
         	filters: 'required pass',
       	},
 	}
-	
 	idealform_init(checkArray,ideals_options,false);
 	$(function(){
 		for(var i = 0;i<checkArray.length;i++){

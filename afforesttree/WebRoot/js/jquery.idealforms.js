@@ -2226,57 +2226,115 @@ $.extend( IdealForms.prototype, {
 		}
 		var regex_content;
 		var error_content;
-		if(objId == 'email'){
-			regex_content = ideal_filters.email.regex;
-			error_content = ideal_filters.email.error;
-		}else if(objId == 'username'){
-			regex_content = ideal_filters.username.regex;
-			error_content = ideal_filters.username.error;
-		}else if(objId == 'password'){
-			regex_content = ideal_filters.pass.regex;
-			error_content = ideal_filters.pass.error;
-		}else if(objId == 'rePassword'){
-			regex_content = ideal_filters.pass.regex;
-			error_content = ideal_filters.pass.error;
+//		if(objId == 'email'){
+//			regex_content = ideal_filters.email.regex;
+//			error_content = ideal_filters.email.error;
+//		}else if(objId == 'username'){
+//			regex_content = ideal_filters.username.regex;
+//			error_content = ideal_filters.username.error;
+//		}else if(objId == 'password'){
+//			regex_content = ideal_filters.pass.regex;
+//			error_content = ideal_filters.pass.error;
+//		}else if(objId == 'rePassword'){
+//			regex_content = ideal_filters.pass.regex;
+//			error_content = ideal_filters.pass.error;
+//		}
+		
+		var filters = obj.data("filters");
+		if(filters != null && filters != ""){
+			var filterArray = filters.split(" ");
+			for(var i = 0; i < filterArray.length; i++){
+				if(filterArray[i] == "required"){
+					if(obj.val() == ""){
+						showOrHideIdealError(objId,false,false,ideal_filters.required.error);
+						return false;
+					}
+				}else{
+					regex_content = ideal_filters[filterArray[i]].regex;
+					error_content = ideal_filters[filterArray[i]].error;
+					if(!regex_content.test(obj.val())){
+						showOrHideIdealError(objId,false,false,error_content);
+						return false;
+					}
+				}
+			}
 		}
-		if (obj.data("required") == true && obj.val() == ""){
-			showOrHideIdealError(objId,false,false,ideal_filters.required.error);
-		}else if(!regex_content.test(obj.val())){
-			showOrHideIdealError(objId,false,false,error_content);
-		}else if(obj.data("copyWith") != null && !ideal_filters.copy.regex(objId , $("#"+obj.data("copyWith")).val())){
+		if(obj.data("copyWith") != null && !ideal_filters.copy.regex(objId , $("#"+obj.data("copyWith")).val())){
 			if(objId == 'rePassword'){
 				error_content = ideal_filters.rePass.error;
 			}
 			showOrHideIdealError(objId,false,false,error_content);
-		}else{
-			if(obj.data("ajaxMethod") != null){
-				showOrHideIdealError(objId,false,true,'');
-				var data = {}
-		        data[ objId ] = $.trim( obj.val() )
-		        data[ 'method'] = obj.data("ajaxMethod");
-				var ajaxOps = {
-				  url: 'ajax.do',
-		          type: 'post',
-		          dataType: 'json',
-		          data: data,
-		          success: function( resp, text, xhr ) {
-		          	if(resp == 'false'){
-		          		showOrHideIdealError(objId,true,false,'');
-						return true;
-		            }else{
-		            	showOrHideIdealError(objId,false,false,$.idealforms.errors.ajaxSuccess.replace('{0}', obj.val()));
-		            }
-		          },
-		          error: function( xhr, text, error ) {
-		        	  showOrHideIdealError(objId,false,false,$.idealforms.errors.ajaxError);
-		          }
-		        }
-		        $.ajax( ajaxOps );
-			}else{
-				showOrHideIdealError(objId,true,false,'');
-				return true;
-			}
+			return false;
 		}
+		if(obj.data("ajaxMethod") != null){
+			showOrHideIdealError(objId,false,true,'');
+			var data = {}
+	        data[ objId ] = $.trim( obj.val() )
+	        data[ 'method'] = obj.data("ajaxMethod");
+			var ajaxOps = {
+			  url: 'ajax.do',
+	          type: 'post',
+	          dataType: 'json',
+	          data: data,
+	          success: function( resp, text, xhr ) {
+	          	if(resp == 'false'){
+	          		showOrHideIdealError(objId,true,false,'');
+					return true;
+	            }else{
+	            	showOrHideIdealError(objId,false,false,$.idealforms.errors.ajaxSuccess.replace('{0}', obj.val()));
+	            	return false;
+	            }
+	          },
+	          error: function( xhr, text, error ) {
+	        	  showOrHideIdealError(objId,false,false,$.idealforms.errors.ajaxError);
+	        	  return false;
+	          }
+	        }
+	        $.ajax( ajaxOps );
+		}else{
+			showOrHideIdealError(objId,true,false,'');
+			return true;
+		}
+		
+		
+//		if (obj.data("required") == true && obj.val() == ""){
+//			showOrHideIdealError(objId,false,false,ideal_filters.required.error);
+//		}else if(!regex_content.test(obj.val())){
+//			showOrHideIdealError(objId,false,false,error_content);
+//		}else if(obj.data("copyWith") != null && !ideal_filters.copy.regex(objId , $("#"+obj.data("copyWith")).val())){
+//			if(objId == 'rePassword'){
+//				error_content = ideal_filters.rePass.error;
+//			}
+//			showOrHideIdealError(objId,false,false,error_content);
+//		}else{
+//			if(obj.data("ajaxMethod") != null){
+//				showOrHideIdealError(objId,false,true,'');
+//				var data = {}
+//		        data[ objId ] = $.trim( obj.val() )
+//		        data[ 'method'] = obj.data("ajaxMethod");
+//				var ajaxOps = {
+//				  url: 'ajax.do',
+//		          type: 'post',
+//		          dataType: 'json',
+//		          data: data,
+//		          success: function( resp, text, xhr ) {
+//		          	if(resp == 'false'){
+//		          		showOrHideIdealError(objId,true,false,'');
+//						return true;
+//		            }else{
+//		            	showOrHideIdealError(objId,false,false,$.idealforms.errors.ajaxSuccess.replace('{0}', obj.val()));
+//		            }
+//		          },
+//		          error: function( xhr, text, error ) {
+//		        	  showOrHideIdealError(objId,false,false,$.idealforms.errors.ajaxError);
+//		          }
+//		        }
+//		        $.ajax( ajaxOps );
+//			}else{
+//				showOrHideIdealError(objId,true,false,'');
+//				return true;
+//			}
+//		}
 		return false;
 	}
 
