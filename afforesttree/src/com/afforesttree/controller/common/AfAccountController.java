@@ -14,7 +14,6 @@ import com.afforesttree.bean.ecom.JUser;
 import com.afforesttree.controller.BaseController;
 import com.afforesttree.domain.common.AfAccount;
 import com.afforesttree.domain.common.AfForgotPassword;
-import com.afforesttree.framework.annotation.LoginCookieValid;
 import com.afforesttree.framework.annotation.Token;
 import com.afforesttree.framework.annotation.TokenValid;
 import com.afforesttree.mav.BaseModelAndView;

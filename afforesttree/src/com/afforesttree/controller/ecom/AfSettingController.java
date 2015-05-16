@@ -51,4 +51,15 @@ public class AfSettingController extends BaseController {
 		response.sendRedirect(UrlUtils.redirectUrl("setting/profile.shtml"));
 		return null;
 	}
+	
+	@LoginCookieValid
+	@RequestMapping("setting/myOasis.shtml")
+	public ModelAndView settingMyOasisPageRequest(HttpServletRequest request,HttpServletResponse response) throws Exception {
+		AfAccount account = accountService.getAccount(CookieUtils.getAccountId());
+		JSettingProfile jSettingProfile = new JSettingProfile(account);
+		BaseModelAndView mv = baseModelAndView("setting/my_oasis");
+		mv.setMetaTitle("MyOasis");
+		mv.addObject("profile", jSettingProfile);
+		return mv;
+	}
 }
