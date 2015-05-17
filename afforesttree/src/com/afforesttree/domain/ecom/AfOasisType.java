@@ -26,6 +26,7 @@ public class AfOasisType implements java.io.Serializable{
 	private Date createTime;
 	@Column(name = "oasis_type_index")
 	private Integer oasisTypeIndex;
+	private Integer status;
 	public Integer getId() {
 		return id;
 	}
@@ -55,5 +56,11 @@ public class AfOasisType implements java.io.Serializable{
 	}
 	public void setOasisTypeIndex(Integer oasisTypeIndex) {
 		this.oasisTypeIndex = oasisTypeIndex;
+	}
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 }

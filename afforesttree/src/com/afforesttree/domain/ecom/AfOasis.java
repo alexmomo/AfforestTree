@@ -30,6 +30,8 @@ public class AfOasis implements java.io.Serializable{
 	private String createAccount;
 	@Column(name = "oasis_state")
 	private Integer oasisState;
+	@Column(name = "oasis_index")
+	private Integer oasisIndex;
 	public Integer getId() {
 		return id;
 	}
@@ -71,5 +73,11 @@ public class AfOasis implements java.io.Serializable{
 	}
 	public void setOasisState(Integer oasisState) {
 		this.oasisState = oasisState;
+	}
+	public Integer getOasisIndex() {
+		return oasisIndex;
+	}
+	public void setOasisIndex(Integer oasisIndex) {
+		this.oasisIndex = oasisIndex;
 	}
 }

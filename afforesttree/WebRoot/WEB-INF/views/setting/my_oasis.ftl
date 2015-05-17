@@ -3,12 +3,12 @@
 	<div id="site-container" class="context-loader-container" data-pjax-container="">
 		<div class="container">
 			<div class="columns">
-				<@form_page.page_setting_left selectedLink="profile"/>
+				<@form_page.page_setting_left selectedLink="myOasis"/>
 				<div class="column three-fourths">
 					<div class="boxed-group">
-						<h3>Public profile</h3>
+						<h3>My Oasis</h3>
 						<div class="boxed-group-inner clearfix">
-						<form id="profile" class="setting_form columns js-uploadable-container js-upload-avatar-image is-default" method="post" data-upload-policy-url="/upload/policies/avatars" action="setting/profile.do" accept-charset="UTF-8">
+						<form id="myOasis" class="setting_form columns js-uploadable-container js-upload-avatar-image is-default" method="post" data-upload-policy-url="/upload/policies/avatars" action="setting/myOasis.do" accept-charset="UTF-8">
 							<div class="column two-thirds">
 							<dl class="form ideal-wrap">
 								<dt>
