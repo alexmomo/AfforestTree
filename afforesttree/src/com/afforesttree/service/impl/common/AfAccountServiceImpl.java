@@ -7,12 +7,16 @@ import java.util.UUID;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONObject;
+
 import org.springframework.stereotype.Service;
 
 import com.afforesttree.bean.ecom.JSettingProfile;
 import com.afforesttree.bean.ecom.JUser;
 import com.afforesttree.dao.common.AfAccountDao;
+import com.afforesttree.dao.ecom.AfAccountOasisDao;
 import com.afforesttree.domain.common.AfAccount;
+import com.afforesttree.domain.ecom.AfAccountOasis;
 import com.afforesttree.service.common.AfAccountService;
 import com.afforesttree.util.CacheManager;
 import com.afforesttree.util.CookieUtils;
@@ -23,6 +27,11 @@ import com.afforesttree.util.UrlUtils;
 public class AfAccountServiceImpl implements AfAccountService {
 	@Resource
 	private AfAccountDao accountDao;
+	
+	@Resource
+	private AfAccountOasisDao accountOasisDao;
+	
+	private static int initDataCount = 1;
 	
 	public AfAccount login(JUser jUser, String ip) {
 		if(checkAccountPassword(jUser.getEmail(), jUser.getPassword())){
@@ -35,6 +44,7 @@ public class AfAccountServiceImpl implements AfAccountService {
 			CacheManager.getInstance().putAccountLoginCookieCache(account.getLoginCookie(), accountId);
 			account.setLastActiveTime(new Date());
 			account.setLastActiveIp(ip);
+			createAccountInitData(account.getAccountId());
 			return account;
 		}
 		return null;
@@ -48,6 +58,7 @@ public class AfAccountServiceImpl implements AfAccountService {
 		account.setLastActiveIp(ip);
 		account = accountDao.saveAccount(account);
 		CacheManager.getInstance().putAccountCache(account.getAccountId(), account);
+		createAccountInitData(account.getAccountId());
 		return account;
 	}
 
@@ -121,5 +132,21 @@ public class AfAccountServiceImpl implements AfAccountService {
 		AfAccount account = getAccount(CookieUtils.getAccountId());
 		updateAccount(jSettingProfile.updateAccount(account));
 		return account;
+	}
+
+	public void createAccountInitData(String accountId) {
+		// 1-oasis
+		AfAccount account = getAccount(accountId);
+		JSONObject initDataFlagJson = JSONObject.fromObject(account.getInitDataFlag());
+		JSONObject newInitDataFlagJson = JSONObject.fromObject(initDataFlagJson);
+		if(initDataFlagJson.size() != initDataCount){
+			if(initDataFlagJson.isEmpty() || initDataFlagJson.getInt("1") != 1){
+				AfAccountOasis accountOasis = new AfAccountOasis(accountId);
+				accountOasisDao.saveAccountOasis(accountOasis);
+				newInitDataFlagJson.element("1", 1);
+			}
+			account.setInitDataFlag(newInitDataFlagJson.toString());
+			updateAccount(account);
+		}
 	}
 }

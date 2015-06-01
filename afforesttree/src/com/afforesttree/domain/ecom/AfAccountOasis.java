@@ -38,4 +38,11 @@ public class AfAccountOasis implements java.io.Serializable{
 	public void setAccountOasisInfo(String accountOasisInfo) {
 		this.accountOasisInfo = accountOasisInfo;
 	}
+	
+	public AfAccountOasis(){}
+	
+	public AfAccountOasis(String accountId){
+		this.accountId = accountId;
+		this.accountOasisInfo = "[]";
+	}
 }

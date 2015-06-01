@@ -30,4 +30,6 @@ public interface AfAccountService {
 	public boolean isExistUsername(String username);
 	
 	public AfAccount settingProfile(JSettingProfile jSettingProfile);
+	
+	public void createAccountInitData(String accountId);
 }

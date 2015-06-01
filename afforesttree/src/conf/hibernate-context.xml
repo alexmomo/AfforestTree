@@ -49,6 +49,7 @@
         <property name="packagesToScan"> 
               <list> 
                    <value>com.afforesttree.domain.common</value>
+                   <value>com.afforesttree.domain.ecom</value>
               </list> 
         </property>
         <property name="hibernateProperties">  

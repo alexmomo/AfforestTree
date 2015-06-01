@@ -49,6 +49,8 @@ public class AfAccount implements java.io.Serializable{
 	private Date lastActiveTime;
 	@Column(name = "last_active_ip")
 	private String lastActiveIp;
+	@Column(name = "init_data_flag")
+	private String initDataFlag;
 	public AfAccount(){
 		
 	}
@@ -71,6 +73,7 @@ public class AfAccount implements java.io.Serializable{
 		this.afb = 0;
 		this.interestIn = "[]";
 		this.lastActiveTime = new Date();
+		this.initDataFlag = "{}";
 	}
 	public Integer getId() {
 		return id;
@@ -203,5 +206,11 @@ public class AfAccount implements java.io.Serializable{
 	}
 	public void setLastActiveIp(String lastActiveIp) {
 		this.lastActiveIp = lastActiveIp;
+	}
+	public String getInitDataFlag() {
+		return initDataFlag;
+	}
+	public void setInitDataFlag(String initDataFlag) {
+		this.initDataFlag = initDataFlag;
 	}
 }
