@@ -23,7 +23,7 @@ public interface AfAccountService {
 	
 	public void updateAccount(AfAccount account);
 	
-	public void updatePassword(String accountId, String password);
+	public void updatePassword(String ip,String accountId, String password);
 	
 	public boolean isExistEmail(String email);
 	

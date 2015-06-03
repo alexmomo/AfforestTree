@@ -29,9 +29,11 @@ public class JSettingOasis {
 		
 	}
 	
-	public JSettingOasis(List<AfOasisType> oasisTypes, JAccountOasisInfo accountOasisInfo){
+	public JSettingOasis(List<AfOasisType> oasisTypes, String accountOasisInfo){
 		this.oasisTypes = oasisTypes;
-		this.accountOasisInfo = accountOasisInfo;
+		JAccountOasisInfo jAccountOasisInfo = new JAccountOasisInfo();
+		jAccountOasisInfo = (JAccountOasisInfo)jAccountOasisInfo.xmlToObject(accountOasisInfo);
+		this.accountOasisInfo = jAccountOasisInfo;
 		for(JOasisInfo oasisInfo : getAccountOasisInfo().getOasisInfos()){
 			for(AfOasisType oasisType : oasisTypes){
 				if(oasisInfo.getOasisTypeId() == oasisType.getId()){

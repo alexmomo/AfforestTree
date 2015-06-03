@@ -1,7 +1,12 @@
 package com.afforesttree.bean.ecom;
 
+import java.io.IOException;
+import java.io.StringWriter;
 import java.util.Date;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -63,5 +68,11 @@ public class JOasisInfo extends JObject {
 
 	public void setOasisType(AfOasisType oasisType) {
 		this.oasisType = oasisType;
+	}
+	
+	public String objectToXml()
+	{
+		this.oasisType = null;
+		return super.objectToXml();
 	}
 }

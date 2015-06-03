@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.afforesttree.bean.ecom.JSettingProfile;
 import com.afforesttree.bean.ecom.JUser;
 import com.afforesttree.dao.common.AfAccountDao;
+import com.afforesttree.dao.common.AfAccountLogDao;
 import com.afforesttree.dao.ecom.AfAccountOasisDao;
 import com.afforesttree.domain.common.AfAccount;
 import com.afforesttree.domain.ecom.AfAccountOasis;
@@ -27,6 +28,9 @@ import com.afforesttree.util.UrlUtils;
 public class AfAccountServiceImpl implements AfAccountService {
 	@Resource
 	private AfAccountDao accountDao;
+	
+	@Resource
+	private AfAccountLogDao accountLogDao;
 	
 	@Resource
 	private AfAccountOasisDao accountOasisDao;
@@ -45,6 +49,7 @@ public class AfAccountServiceImpl implements AfAccountService {
 			account.setLastActiveTime(new Date());
 			account.setLastActiveIp(ip);
 			createAccountInitData(account.getAccountId());
+			accountLogDao.saveAccountLog(accountId, ip, 2);
 			return account;
 		}
 		return null;
@@ -59,6 +64,7 @@ public class AfAccountServiceImpl implements AfAccountService {
 		account = accountDao.saveAccount(account);
 		CacheManager.getInstance().putAccountCache(account.getAccountId(), account);
 		createAccountInitData(account.getAccountId());
+		accountLogDao.saveAccountLog(account.getAccountId(), ip, 1);
 		return account;
 	}
 
@@ -111,9 +117,10 @@ public class AfAccountServiceImpl implements AfAccountService {
 		return accountDao.getAccount(accountId)!=null;
 	}
 
-	public void updatePassword(String accountId, String password) {
+	public void updatePassword(String ip,String accountId, String password) {
 		getAccount(accountId).setPassword(JUtility.strToMD5(password));
 		accountDao.updateAccount(getAccount(accountId));
+		accountLogDao.saveAccountLog(accountId, ip, 3);
 	}
 
 	public boolean isExistEmail(String email) {

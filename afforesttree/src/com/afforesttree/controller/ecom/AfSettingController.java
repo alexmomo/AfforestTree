@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.afforesttree.bean.ecom.JSettingOasis;
 import com.afforesttree.bean.ecom.JSettingProfile;
 import com.afforesttree.controller.BaseController;
 import com.afforesttree.domain.common.AfAccount;
@@ -64,12 +65,10 @@ public class AfSettingController extends BaseController {
 	public ModelAndView settingMyOasisPageRequest(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		AfAccountOasis accountOasis = oasisService.getAccountOasisById(CookieUtils.getAccountId());
 		AfAccount account = accountService.getAccount(CookieUtils.getAccountId());
-		JSettingProfile jSettingProfile = new JSettingProfile(account);
 		BaseModelAndView mv = baseModelAndView("setting/my_oasis");
 		mv.setMetaTitle("MyOasis");
-		mv.addObject("profile", jSettingProfile);
-		List<AfOasisType> oasisTypeList = oasisService.getAllOasisTypeList();
-		mv.addObject("oasisTypes", oasisTypeList);
+		JSettingOasis settingOasis = new JSettingOasis(oasisTypeList, accountOasis.getAccountOasisInfo());
+		mv.addObject("settingOasis", settingOasis);
 		return mv;
 	}
 }

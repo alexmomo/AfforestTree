@@ -8,6 +8,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.afforesttree.bean.ecom.JAccountOasisInfo;
+
 
 @Entity
 @Table(name="af_account_oasis")
@@ -43,6 +45,7 @@ public class AfAccountOasis implements java.io.Serializable{
 	
 	public AfAccountOasis(String accountId){
 		this.accountId = accountId;
-		this.accountOasisInfo = "[]";
+		JAccountOasisInfo jAccountOasisInfo = new JAccountOasisInfo();
+		this.accountOasisInfo = jAccountOasisInfo.objectToXml();
 	}
 }

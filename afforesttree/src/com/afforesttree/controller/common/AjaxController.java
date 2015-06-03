@@ -26,7 +26,7 @@ public class AjaxController extends BaseController{
 	private AfAccountService accountService;	
 	
 	@RequestMapping("ajax.do")
-	public ModelAndView goSearch(HttpServletRequest request,HttpServletResponse response,HttpSession session) throws IOException{
+	public ModelAndView ajaxRequest(HttpServletRequest request,HttpServletResponse response,HttpSession session) throws IOException{
 		try {
 			PrintWriter out = response.getWriter();
 			JSONArray json = new JSONArray();

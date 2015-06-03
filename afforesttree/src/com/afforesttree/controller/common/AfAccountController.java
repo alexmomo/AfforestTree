@@ -133,7 +133,7 @@ public class AfAccountController extends BaseController {
 		String password = request.getParameter("password");
 		if((StringUtils.checkEmail(accountId) || StringUtils.checkMobile(accountId)) && StringUtils.checkPassword(old_password) && StringUtils.checkPassword(password)){
 			if(accountService.checkAccountPassword(accountId, old_password)){
-				accountService.updatePassword(accountId, password);
+				accountService.updatePassword(getClientHostIp(), accountId, password);
 				return loginPageRequest(request, response);
 			}
 		}

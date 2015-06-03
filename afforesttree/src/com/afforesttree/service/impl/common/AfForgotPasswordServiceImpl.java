@@ -44,11 +44,11 @@ public class AfForgotPasswordServiceImpl implements AfForgotPasswordService {
 		
 	}
 
-	public boolean resetPassword(int id, String uuid) {
+	public boolean resetPassword(String ip, int id, String uuid) {
 		AfForgotPassword forgotPassword = forgotPasswordDao.getForgotPassword(id);
 		if(forgotPassword != null){
 			if(forgotPassword.getStatus() == 2 && forgotPassword.getUuid().equals(uuid)){
-				accountService.updatePassword(forgotPassword.getAccountId(), JUtility.strToMD5(uuid.substring(0, 6)));
+				accountService.updatePassword(ip, forgotPassword.getAccountId(), JUtility.strToMD5(uuid.substring(0, 6)));
 				return true;
 			}
 		}
