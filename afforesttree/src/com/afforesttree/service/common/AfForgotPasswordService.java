@@ -17,5 +17,5 @@ public interface AfForgotPasswordService {
 	
 	public void getForgotPassword(int id);
 	
-	public boolean resetPassword(int id, String uuid);
+	public boolean resetPassword(String ip, int id, String uuid);
 }

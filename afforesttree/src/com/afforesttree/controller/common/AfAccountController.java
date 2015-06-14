@@ -146,7 +146,7 @@ public class AfAccountController extends BaseController {
 		String uuid = request.getParameter("uuid");
 		if(StringUtils.isNumber(id) && StringUtils.checkEmpty(uuid)){
 			int forgotPasswordId = Integer.valueOf(id);
-			if(forgotPasswordService.resetPassword(forgotPasswordId, uuid)){
+			if(forgotPasswordService.resetPassword(getClientHostIp(), forgotPasswordId, uuid)){
 				return updatePasswordPageRequest(request, response);
 			}
 		}

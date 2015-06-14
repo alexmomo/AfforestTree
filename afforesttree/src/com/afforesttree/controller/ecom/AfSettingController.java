@@ -64,6 +64,7 @@ public class AfSettingController extends BaseController {
 	@RequestMapping("setting/myOasis.shtml")
 	public ModelAndView settingMyOasisPageRequest(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		AfAccountOasis accountOasis = oasisService.getAccountOasisById(CookieUtils.getAccountId());
+		List<AfOasisType> oasisTypeList = oasisService.getAllOasisTypeList();
 		AfAccount account = accountService.getAccount(CookieUtils.getAccountId());
 		BaseModelAndView mv = baseModelAndView("setting/my_oasis");
 		mv.setMetaTitle("MyOasis");
