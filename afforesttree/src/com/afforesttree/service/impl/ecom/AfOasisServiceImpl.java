@@ -2,74 +2,55 @@ package com.afforesttree.service.impl.ecom;
 
 
 
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.afforesttree.dao.common.AfAccountDao;
-import com.afforesttree.dao.ecom.AfAccountApplyDao;
-import com.afforesttree.dao.ecom.AfAccountMissionDao;
-import com.afforesttree.dao.ecom.AfApplyDao;
-import com.afforesttree.dao.ecom.AfMissionApplyDao;
-import com.afforesttree.dao.ecom.AfMissionDao;
-import com.afforesttree.domain.ecom.AfAccountMission;
+import com.afforesttree.dao.ecom.AfAccountOasisDao;
+import com.afforesttree.dao.ecom.AfOasisDao;
+import com.afforesttree.dao.ecom.AfOasisTypeDao;
 import com.afforesttree.domain.ecom.AfAccountOasis;
-import com.afforesttree.domain.ecom.AfMission;
 import com.afforesttree.domain.ecom.AfOasis;
 import com.afforesttree.domain.ecom.AfOasisType;
-import com.afforesttree.service.ecom.AfMissionService;
 import com.afforesttree.service.ecom.AfOasisService;
 
 @Service("oasisService")
 public class AfOasisServiceImpl implements AfOasisService {
 	@Resource
-	private AfAccountDao accountDao;
+	private AfOasisDao oasisDao;
 	
 	@Resource
-	private AfMissionDao missionDao;
+	private AfOasisTypeDao oasisTypeDao;
 	
 	@Resource
-	private AfAccountMissionDao accountMissionDao;
+	private AfAccountOasisDao accountOasisDao;
 	
-	@Resource
-	private AfApplyDao applyDao;
-	
-	@Resource
-	private AfAccountApplyDao accountApplyDao;
-	
-	@Resource
-	private AfMissionApplyDao missionApplyDao;
-
 	public AfAccountOasis createAccountOasis(AfAccountOasis accountOasis) {
-		// TODO Auto-generated method stub
-		return null;
+		accountOasisDao.saveAccountOasis(accountOasis);
+		return accountOasis;
 	}
 
 	public AfAccountOasis getAccountOasisById(String accountId) {
-		// TODO Auto-generated method stub
-		return null;
+		AfAccountOasis accountOasis = accountOasisDao.getAccountOasisByAccountId(accountId);
+		return accountOasisDao.getAccountOasisByAccountId(accountId);
 	}
 
 	public List<AfOasis> getAllOasisList() {
-		// TODO Auto-generated method stub
-		return null;
+		return oasisDao.getAllOasisList();
 	}
 
 	public List<AfOasisType> getAllOasisTypeList() {
-		// TODO Auto-generated method stub
-		return null;
+		return oasisTypeDao.getAllOasisTypeList();
 	}
 
 	public List<AfOasis> getOasisListByType(int oasisType) {
-		// TODO Auto-generated method stub
-		return null;
+		return oasisDao.getOasisListByType(oasisType);
 	}
 
 	public AfAccountOasis updateAccountOasis(AfAccountOasis accountOasis) {
-		// TODO Auto-generated method stub
-		return null;
+		accountOasisDao.updateAccountOasis(accountOasis);
+		return accountOasis;
 	}
 }
