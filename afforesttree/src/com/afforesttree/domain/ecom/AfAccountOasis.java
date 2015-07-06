@@ -48,4 +48,8 @@ public class AfAccountOasis implements java.io.Serializable{
 		JAccountOasisInfo jAccountOasisInfo = new JAccountOasisInfo();
 		this.accountOasisInfo = jAccountOasisInfo.objectToXml();
 	}
+	
+	public AfAccountOasis focusOasisType(AfOasisType oasisType){
+		
+	}
 }

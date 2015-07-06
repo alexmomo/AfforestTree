@@ -58,4 +58,17 @@ public class AfOasisTypeDaoImpl  extends BaseHibernateDaoSupport implements AfOa
 			throw re;
 		}
 	}
+
+	public AfOasisType getOasisType(String oasisTypeId) {
+		List list = null;
+		String sql = " from AfOasisType where oasisTypeId=:oasisTypeId";
+		Query query = getSession().createQuery(sql);
+		query.setString("oasisTypeId", oasisTypeId);
+		list = query.list();
+		if(list != null && list.size() > 0)
+		{
+			return (AfOasisType)list.get(0);
+		}
+		return null;
+	}
 }

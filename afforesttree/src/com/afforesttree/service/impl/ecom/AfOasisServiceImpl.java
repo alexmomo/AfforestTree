@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.afforesttree.dao.ecom.AfAccountOasisDao;
 import com.afforesttree.dao.ecom.AfOasisDao;
 import com.afforesttree.dao.ecom.AfOasisTypeDao;
+import com.afforesttree.domain.common.AfAccount;
 import com.afforesttree.domain.ecom.AfAccountOasis;
 import com.afforesttree.domain.ecom.AfOasis;
 import com.afforesttree.domain.ecom.AfOasisType;
@@ -52,5 +53,17 @@ public class AfOasisServiceImpl implements AfOasisService {
 	public AfAccountOasis updateAccountOasis(AfAccountOasis accountOasis) {
 		accountOasisDao.updateAccountOasis(accountOasis);
 		return accountOasis;
+	}
+
+	public void focusOasisType(String accountId, String oasisTypeId) {
+		List<AfOasisType> oasisTypeList = getAllOasisTypeList();
+		AfOasisType currentOasisType = oasisTypeDao.getOasisType(oasisTypeId);
+		if(currentOasisType != null){
+			AfAccountOasis accountOasis = getAccountOasisById(accountId);
+		}
+	}
+
+	public void unfocusOasisType(String accountId, String oasisTypeId) {
+		// TODO Auto-generated method stub
 	}
 }

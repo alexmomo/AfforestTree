@@ -72,4 +72,17 @@ public class AfSettingController extends BaseController {
 		mv.addObject("settingOasis", settingOasis);
 		return mv;
 	}
+	
+	@LoginCookieValid
+	@RequestMapping("setting/focus_oasis_type.do")
+	public ModelAndView focusOasisTypeRequest(HttpServletRequest request,HttpServletResponse response,String oasis_type_id) throws Exception {
+		String oasisTypeId = oasis_type_id;
+		List<AfOasisType> oasisTypeList = oasisService.getAllOasisTypeList();
+		if(oasisTypeId != null){
+			AfAccount account = accountService.getAccount(CookieUtils.getAccountId());
+			oasisService.focusOasisType(account.getAccountId(), oasis_type_id);
+		}
+		response.sendRedirect(UrlUtils.redirectUrl("setting/myOasis.shtml"));
+		return null;
+	}
 }
