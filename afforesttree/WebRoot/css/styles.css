@@ -583,6 +583,80 @@ footer a:visited {
   margin-top: 15px;
 }
 
+
+/*
+setting
+*/
+.zg-clear::before, .zg-clear::after {
+    content: " ";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+.zg-clear::after {
+    clear: both;
+}
+.zg-clear::before, .zg-clear::after {
+    content: " ";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+.topic-item {
+    padding: 15px 0;
+}
+.zg-clear {
+    height: 1%;
+}
+
+.topic-avatar {
+    float: left;
+    height: 50px;
+    margin-top: 4px;
+    position: relative;
+    width: 50px;
+}
+
+.topic-avatar-img {
+    border-radius: 3px;
+    height: 50px;
+    width: 50px;
+}
+
+.topic-item-content {
+    margin: -3px 0 0 64px;
+}
+
+.topic-item-title {
+    margin-bottom: 6px;
+    word-break: break-all;
+}
+
+.topic-item-title-link {
+    color: #222;
+}
+
+a.unpin, a.pin {
+    margin-left: 3px;
+}
+div[contentEditable], input, textarea, button, a:link {
+}
+.topic-hover-content {
+    display: inline-block;
+}
+.zg-gray {
+    color: #999;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.topic-feed-item {
+    margin-bottom: 6px;
+}
+
+.topic-pages .time, .topic-feed-page .time, .topic-top-page .time, .topic-quesiton-page .time {
+    font-weight: 400;
+}
 /* Form
  * ------------------------------------------------ */
 

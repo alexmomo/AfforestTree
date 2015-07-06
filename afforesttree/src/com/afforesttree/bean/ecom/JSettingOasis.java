@@ -1,5 +1,6 @@
 package com.afforesttree.bean.ecom;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.afforesttree.domain.ecom.AfOasisType;
@@ -8,6 +9,8 @@ public class JSettingOasis {
 	private List<AfOasisType> oasisTypes;
 	
 	private JAccountOasisInfo accountOasisInfo;
+	
+	private List<AfOasisType> otherOasisTypes;
 
 	public List<AfOasisType> getOasisTypes() {
 		return oasisTypes;
@@ -25,6 +28,14 @@ public class JSettingOasis {
 		this.accountOasisInfo = accountOasisInfo;
 	}
 	
+	public List<AfOasisType> getOtherOasisTypes() {
+		return otherOasisTypes;
+	}
+
+	public void setOtherOasisTypes(List<AfOasisType> otherOasisTypes) {
+		this.otherOasisTypes = otherOasisTypes;
+	}
+
 	public JSettingOasis(){
 		
 	}
@@ -34,12 +45,22 @@ public class JSettingOasis {
 		JAccountOasisInfo jAccountOasisInfo = new JAccountOasisInfo();
 		jAccountOasisInfo = (JAccountOasisInfo)jAccountOasisInfo.xmlToObject(accountOasisInfo);
 		this.accountOasisInfo = jAccountOasisInfo;
-		for(JOasisInfo oasisInfo : getAccountOasisInfo().getOasisInfos()){
-			for(AfOasisType oasisType : oasisTypes){
-				if(oasisInfo.getOasisTypeId() == oasisType.getId()){
-					oasisInfo.setOasisType(oasisType);
-					break;
+		if(otherOasisTypes == null){
+			otherOasisTypes = new ArrayList<AfOasisType>();
+		}
+		for(AfOasisType oasisType : oasisTypes){
+			boolean isExistOasis = false;
+			if(getAccountOasisInfo().getOasisInfos() != null){
+				for(JOasisInfo oasisInfo : getAccountOasisInfo().getOasisInfos()){
+					if(oasisInfo.getOasisTypeId() == oasisType.getId()){
+						oasisInfo.setOasisType(oasisType);
+						isExistOasis = true;
+						break;
+					}
 				}
+			}
+			if(!isExistOasis){
+				otherOasisTypes.add(oasisType);
 			}
 		}
 	}
