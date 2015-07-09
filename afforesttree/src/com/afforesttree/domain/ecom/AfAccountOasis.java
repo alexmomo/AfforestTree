@@ -9,6 +9,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.afforesttree.bean.ecom.JAccountOasisInfo;
+import com.afforesttree.bean.ecom.JOasisInfo;
 
 
 @Entity
@@ -50,6 +51,10 @@ public class AfAccountOasis implements java.io.Serializable{
 	}
 	
 	public AfAccountOasis focusOasisType(AfOasisType oasisType){
-		
+		JAccountOasisInfo jAccountOasisInfo = new JAccountOasisInfo();
+		jAccountOasisInfo = (JAccountOasisInfo) jAccountOasisInfo.xmlToObject(this.getAccountOasisInfo());
+		JOasisInfo oasisInfo = new JOasisInfo();
+//		jAccountOasisInfo.getOasisInfos().add(e)
+		return null;
 	}
 }
